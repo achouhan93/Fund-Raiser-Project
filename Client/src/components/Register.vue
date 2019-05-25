@@ -1,5 +1,5 @@
 /* eslint-disable */
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-layout aria-rowcount="center">
       <v-flex xs6 offset-xs3>
         <div class="white elevation-2">
@@ -15,7 +15,7 @@
                <v-text-field
                label="Password"
                placeholder="password"
-               v-model="passowrd"></v-text-field>
+               v-model="password"></v-text-field>
             <br>
              <v-text-field
                label="First name"
@@ -27,7 +27,41 @@
                placeholder="your first name"
                v-model="lname"></v-text-field>
             <div class="error" v-html="error"></div>
-            <br>
+             <br>
+             <v-select
+               :items="genders"
+               label="Gender"></v-select>
+             <br>
+             <v-menu
+               ref="menu"
+               v-model="menu"
+               :close-on-content-click="false"
+               :nudge-right="40"
+               lazy
+               transition="scale-transition"
+               offset-y
+               full-width
+               min-width="290px"
+             >
+               <template v-slot:activator="{ on }">
+                 <v-text-field
+                   v-model="date"
+                   label="Birthday date"
+                   prepend-icon="event"
+                   readonly
+                   v-on="on"
+                 ></v-text-field>
+               </template>
+               <v-date-picker
+                 ref="picker"
+                 v-model="date"
+                 :max="new Date().toISOString().substr(0, 10)"
+                 min="1950-01-01"
+                 @change="save"
+               ></v-date-picker>
+               <v-text-field ></v-text-field>
+             </v-menu>
+             <br>
             <v-btn @click="register" class="cyan">Register</v-btn>
          </div>
         </div>
@@ -41,8 +75,11 @@ export default {
   data () {
     return {
       email: '',
-      passowrd: '',
-      error: null
+      password: '',
+      error: null,
+      genders: ['Male', 'Female'],
+      date: null,
+      menu: false
     }
   },
   methods: {
@@ -56,6 +93,14 @@ export default {
       } catch (error) {
         this.error = error.response.data.error
       }
+    },
+    save (date) {
+      this.$refs.menu.save(date)
+    }
+  },
+  watch: {
+    menu (val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     }
   }
 }

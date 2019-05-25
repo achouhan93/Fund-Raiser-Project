@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       email: '',
-      passowrd: '',
+      password: '',
       error: null
     }
   },
