@@ -10,14 +10,23 @@
                <v-text-field
                label="Email"
                placeholder="email"
-               v-model="email"/>
+               v-model="email"></v-text-field>
              <br>
                <v-text-field
                label="Password"
                placeholder="password"
-               v-model="passowrd"/>
+               v-model="passowrd"></v-text-field>
             <br>
-            <div class="error" v-html="error"/>
+             <v-text-field
+               label="First name"
+               placeholder="your first name"
+               v-model="fname"></v-text-field>
+             <br>
+             <v-text-field
+               label="Last name"
+               placeholder="your first name"
+               v-model="lname"></v-text-field>
+            <div class="error" v-html="error"></div>
             <br>
             <v-btn @click="register" class="cyan">Register</v-btn>
          </div>
