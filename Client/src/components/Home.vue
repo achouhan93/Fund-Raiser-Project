@@ -156,32 +156,6 @@ export default {
 </script>
 
 <style>
-
-  .cause_title{
-    font-size: 30px;
-    font-weight: bold;
-  }
-  .cause_collection{
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .cause_description {
-    font-size: 18px;
-  }
-  .cause_target_amount {
-    font-size: 18px;
-  }
-  .cause_expiration_date {
-    font-weight: bold;
-    font-weight: 18px;
-  }
-  .album-image{
-    width: 70%;
-    margin: 0 auto;
-  }
-  .homePanel{
-    background: bisque;
-  }
   .home_title{
     color: white;
   }
