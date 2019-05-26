@@ -19,7 +19,7 @@
             <br>
             <div class="error" v-html="error"/>
             <br>
-            <v-btn @click="login" class="cyan">Login</v-btn>
+            <v-btn @click="login" class="cyan btn-login">Login</v-btn>
          </div>
         </div>
       </v-flex>
@@ -59,5 +59,8 @@ export default {
 }
 .loginInput{
   padding: inherit;
+}
+.btn-login{
+    color: white;
 }
 </style>

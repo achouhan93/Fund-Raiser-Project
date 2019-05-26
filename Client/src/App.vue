@@ -27,9 +27,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.v-btn__content {
-  color: white;
-}
 .v-toolbar__content {
   color: white;
 }

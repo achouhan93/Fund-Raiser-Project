@@ -84,7 +84,7 @@
                @click:append="show3 = !show3"
              ></v-text-field>
              <br>
-            <v-btn @click="register" class="cyan">Register</v-btn>
+            <v-btn @click="register" class="cyan btn-register">Register</v-btn>
          </div>
         </div>
       </v-flex>
@@ -147,5 +147,8 @@ export default {
 }
 .registerInput{
   padding: inherit;
+}
+.btn-register{
+  color: white;
 }
 </style>
