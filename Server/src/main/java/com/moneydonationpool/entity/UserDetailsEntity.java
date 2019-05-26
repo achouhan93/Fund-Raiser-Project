@@ -45,13 +45,19 @@ public class UserDetailsEntity {
 	private String address;
 	
 	@Column(name = "ph_no")
-	private int phNo;
+	private String phNo;
 	
 	@Column(name = "creation_date")
 	private Date creationDate;
 	
 	@Column(name = "modified_date")
 	private Date modifiedDate;
+	
+	@Column(name = "is_active")
+	private boolean isActive;
+	
+	@Column(name = "user_type")
+	private String userType;
 	
 
 }

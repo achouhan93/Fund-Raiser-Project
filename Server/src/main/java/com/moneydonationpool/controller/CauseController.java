@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
 
 @RestController
@@ -39,13 +40,13 @@ public class CauseController {
 	}
 	
 	@PostMapping("/postCause")
-	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails) {
-		LOGGER.info("addCause");
-		return causeService.postCause(postCauseDetails);
+	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@RequestParam int userId) throws MoneyDonationPoolException {
+		LOGGER.info("psotCause");
+		return causeService.postCause(postCauseDetails,userId);
 	}
 	
 	@PostMapping("/updateCause")
-	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @RequestParam int userId) {
+	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @RequestParam int userId) throws MoneyDonationPoolException {
 		return causeService.updateCause(updateCause,userId);
 	}
 
