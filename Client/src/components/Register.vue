@@ -7,15 +7,6 @@
              <v-toolbar-title>Register</v-toolbar-title>
            </v-toolbar>
            <div class="pl-4 pr-4 pb-2 pt-2">
-               <v-text-field
-               label="Email"
-               placeholder="email"
-               v-model="email"></v-text-field>
-             <br>
-               <v-text-field
-               label="Password"
-               placeholder="password"
-               v-model="password"></v-text-field>
             <br>
              <v-text-field
                label="First name"
@@ -24,7 +15,7 @@
              <br>
              <v-text-field
                label="Last name"
-               placeholder="your first name"
+               placeholder="your last name"
                v-model="lname"></v-text-field>
             <div class="error" v-html="error"></div>
              <br>
@@ -59,8 +50,39 @@
                  min="1950-01-01"
                  @change="save"
                ></v-date-picker>
-               <v-text-field ></v-text-field>
              </v-menu>
+             <br>
+             <v-text-field
+               label="Email"
+               placeholder="email"
+               v-model="email"></v-text-field>
+             <br>
+             <v-text-field
+               label="Confirm Email"
+               placeholder="re-enter email"
+               v-model="cnf_email"></v-text-field>
+             <br>
+               <v-text-field
+                 :append-icon="show3 ? 'visibility' : 'visibility_off'"
+                 :rules="[rules.required, rules.min]"
+                 :type="show3 ? 'text' : 'password'"
+                 name="input-10-2"
+                 label="Password"
+                 hint="At least 8 characters"
+                 class="input-group--focused"
+                 @click:append="show3 = !show3"
+               ></v-text-field>
+             <br>
+             <v-text-field
+               :append-icon="show3 ? 'visibility' : 'visibility_off'"
+               :rules="[rules.required, rules.min]"
+               :type="show3 ? 'text' : 'password'"
+               name="input-10-2"
+               label="Re-Enter Password"
+               hint="At least 8 characters"
+               class="input-group--focused"
+               @click:append="show3 = !show3"
+             ></v-text-field>
              <br>
             <v-btn @click="register" class="cyan">Register</v-btn>
          </div>
@@ -74,16 +96,28 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
+      fname: '',
+      lname: '',
       email: '',
+      cnf_email: '',
       password: '',
       error: null,
       genders: ['Male', 'Female'],
       date: null,
-      menu: false
+      menu: false,
+      show1: false,
+      show2: true,
+      show3: false,
+      show4: false,
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered don\'t match')
+      }
     }
   },
   methods: {
-    async register () {
+    register: async function () {
       try {
         const response = await AuthenticationService.register({
           email: this.email,
