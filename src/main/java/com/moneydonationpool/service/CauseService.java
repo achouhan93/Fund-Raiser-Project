@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.exception.MoneyDonationPoolException;
 
 public interface CauseService {
 
@@ -12,9 +13,9 @@ public interface CauseService {
 
 	CauseEntity getCauseById(int causeId);
 
-	CauseEntity postCause(CauseEntity postCauseDetails);
+	CauseEntity postCause(CauseEntity postCauseDetails, int userId) throws MoneyDonationPoolException;
 
-	CauseEntity updateCause(CauseEntity editCause, int userId);
+	CauseEntity updateCause(CauseEntity editCause, int userId) throws MoneyDonationPoolException;
 
 	ResponseEntity<String> deleteCause(int causeId, int userId);
 
