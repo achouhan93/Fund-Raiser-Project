@@ -67,90 +67,11 @@ export default {
   },
   data () {
     return {
-      causes: [
-        {
-          categoryId: 1,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '1.png',
-          flex: 6
-        },
-        {
-          categoryId: 2,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '2.png',
-          flex: 6
-        },
-        {
-          categoryId: 3,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '3.png',
-          flex: 6
-        },
-        {
-          categoryId: 4,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '4.png',
-          flex: 6
-        },
-        {
-          categoryId: 5,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '5.png',
-          flex: 6
-        },
-        {
-          categoryId: 2,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '2.png',
-          flex: 6
-        },
-        {
-          categoryId: 3,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '3.png',
-          flex: 6
-        }
-
-      ]
+      causes: null
     }
   },
   async mounted () {
-    this.causes = await CauseService.getAllCauses()
+    this.causes = CauseService.getAllCauses()
   }
 }
 </script>
