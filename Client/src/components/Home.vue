@@ -70,15 +70,6 @@ export default {
   },
   mounted () {
     // this.causes = CauseService.getAllCauses().toJSON
-
-    /* axios post template
-    // axios.post(`http://jsonplaceholder.typicode.com/posts`, {
-    //  body: this.postBody
-    // })
-    // .then(response => {})
-    // .catch(e => {
-    //  this.errors.push(e)
-    }) */
     axios
       .get('http://localhost:8085/cause/getAllActiveCauses')
       .then(response => (this.causes = response.data))

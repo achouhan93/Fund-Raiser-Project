@@ -1,4 +1,4 @@
-
+import Api from '@/services/Api'
 export default {
   getAllCauses: async function () {
     var url = 'http://localhost:8085/cause/getAllActiveCauses'
@@ -9,5 +9,9 @@ export default {
       .then(data => console.log(data))
     console.log('res' + res)
     return data
+  },
+  getCauseById (causeId) {
+    // eslint-disable-next-line no-template-curly-in-string
+    return Api().get('cause/getCauseById?causeId=' + causeId)
   }
 }
