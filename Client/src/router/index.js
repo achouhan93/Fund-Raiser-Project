@@ -4,6 +4,7 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import CreateCause from '@/components/CreateCause'
+import CauseDetails from '@/components/CauseDetails'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/createcause',
       name: 'createcause',
       component: CreateCause
+    },
+    {
+      path: '/cause_details/',
+      name: 'cause_details',
+      component: CauseDetails
     }
   ]
 })

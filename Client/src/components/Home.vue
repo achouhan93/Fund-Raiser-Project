@@ -17,11 +17,10 @@
             <v-flex
               v-for="cause in causes"
               :key="cause.causeTitle"
-              v-bind="{ [`xs${cause.flex}`]: true }"
-            >
+              v-bind="{ [`xs${v_binding_flex}`]: true }">
               <v-card>
                 <v-img
-                  v-bind:src="require('@/assets/'+cause.imageUrl)"
+                  v-bind:src="require('@/assets/'+'1.png')"
                   height="200px"
                 >
                   <v-container
@@ -39,15 +38,9 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="cyan" icon>
-                    <v-icon>favorite</v-icon>
-                  </v-btn>
-                  <v-btn class="cyan" icon>
-                    <v-icon>bookmark</v-icon>
-                  </v-btn>
-                  <v-btn class="cyan" icon>
-                    <v-icon>share</v-icon>
-                  </v-btn>
+                  <div>
+                    <CauseDetails causeId="1234560"> More </CauseDetails>
+                  </div>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -60,99 +53,40 @@
 
 <script>
 import Panel from '@/components/Panel'
-import CauseService from '@/services/GetCauseService'
+import CauseDetails from '@/components/CauseDetails'
+// import { CauseDetails } from './CauseDetails.vue'
+// import CauseService from '@/services/GetCauseService'
+import axios from 'axios'
 export default {
+  name: 'Home',
   components: {
-    Panel
+    Panel,
+    CauseDetails
+    // CauseDetails
   },
   data () {
     return {
-      causes: [
-        {
-          categoryId: 1,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '1.png',
-          flex: 6
-        },
-        {
-          categoryId: 2,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '2.png',
-          flex: 6
-        },
-        {
-          categoryId: 3,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '3.png',
-          flex: 6
-        },
-        {
-          categoryId: 4,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '4.png',
-          flex: 6
-        },
-        {
-          categoryId: 5,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '5.png',
-          flex: 6
-        },
-        {
-          categoryId: 2,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '2.png',
-          flex: 6
-        },
-        {
-          categoryId: 3,
-          causeTargetAmount: 6000,
-          causeExpirationDate: '2019/10/30',
-          description: 'Recently there was a flood in Kerala, This cause has been raised inorder to help the victims of the flood in kerala',
-          collection: 100,
-          causeTitle: 'Collection of fund for ferry cyclone in kerala',
-          active: true,
-          imageUrl: '3.png',
-          flex: 6
-        }
-
-      ]
+      causes: [],
+      v_binding_flex: 6,
+      causeId: '123'
     }
   },
-  async mounted () {
-    this.causes = await CauseService.getAllCauses()
+  mounted () {
+    // this.causes = CauseService.getAllCauses().toJSON
+    axios
+      .get('http://localhost:8085/cause/getAllActiveCauses')
+      .then(response => (this.causes = response.data))
+  },
+  methods: {
+    async cause_detail (cause) {
+      this.$router.push('cause_details', cause)
+    },
+    navigateTo (route) {
+      this.$router.push(route)
+    }
   }
 }
+console.log(this.causes)
 </script>
 
 <style>
