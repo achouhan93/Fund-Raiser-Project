@@ -1,106 +1,131 @@
-/* eslint-disable */
-<template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <h4>Create a new Fund Raiser</h4>
-      </v-flex>
-    </v-layout>
-    <v-layout row>
-      <v-flex xs12>
-        <form @submit.prevent="onCreateMeetup">
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+  <v-layout aria-rowcount="center">
+    <v-flex xs6 offset-xs3>
+      <div class="white elevation-2">
+        <v-toolbar flat dense class="cyan" dark>
+          <v-toolbar-title>Create a Cause</v-toolbar-title>
+        </v-toolbar>
+        <form @submit.prevent="onCreatecause">
+        <div class="pl-4 pr-4 pb-2 pt-2">
+          <br>
+          <v-text-field
+            name="title"
+            label="Title"
+            id="cause_title"
+            v-model="cause_title"
+            required></v-text-field>
+          <br>
+          <v-select
+            :items="category"
+            label="Category"></v-select>
+          <br>
+          <v-text-field
+            name="description"
+            label="Description"
+            id="description"
+            multi-line
+            v-model="description"
+            required></v-text-field>
+          <br>
+          <br>
+          <v-text-field
+            name="in euros"
+            label="Targeted Amount"
+            id="cause_target_amt"
+            v-model="cause_target_amt"
+            required></v-text-field>
+          <br>
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
               <v-text-field
-                name="title"
-                label="Title"
-                id="title"
-                v-model="title"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="location"
-                label="Location"
-                id="location"
-                v-model="location"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="imageUrl"
-                label="Image URL"
-                id="image-url"
-                v-model="imageUrl"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <img :src="imageUrl" height="150">
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="description"
-                label="Description"
-                id="description"
-                multi-line
-                v-model="description"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-btn
-                class="primary"
-                :disabled="!formIsValid"
-                type="submit">Create Meetup</v-btn>
-            </v-flex>
-          </v-layout>
+                v-model="cause_expiration_date"
+                label="Expiration date"
+                prepend-icon="event"
+                readonly
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              ref="picker"
+              v-model="cause_expiration_date"
+              :max="new Date().toISOString().substr(0, 10)"
+              min="1950-01-01"
+              @change="save"
+            ></v-date-picker>
+          </v-menu>
+          <br>
+          <v-text-field
+          name="in euros"
+          label="Account number"
+          id="account_number"
+          v-model="account_number"
+          required></v-text-field>
+          <br>
+          <v-text-field
+            name="in euros"
+            label="BIC Code"
+            id="code"
+            v-model="code"
+            required></v-text-field>
+          <br>
+          <v-btn @click="createCause" class="cyan btn-createCause">Create Cause</v-btn>
+        </div>
         </form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </div>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      title: '',
-      location: '',
-      imageUrl: '',
-      description: ''
+      cause_title: '',
+      category: ['Natural Disaster', 'Personal', 'Education'],
+      description: '',
+      cause_target_amt: '',
+      cause_expiration_date: null,
+      account_number: '',
+      code: ''
     }
   },
   computed: {
     formIsValid () {
-      return this.title !== '' &&
-        this.location !== '' &&
-        this.imageUrl !== '' &&
-        this.description !== ''
+      return this.cause_title !== '' &&
+        this.category !== '' &&
+        this.description !== '' &&
+        this.cause_target_amt !== '' &&
+        this.cause_expiration_date !== '' &&
+        this.account_number !== '' &&
+        this.code !== ''
     }
   },
   methods: {
-    onCreateMeetup () {
+    onCreatecause () {
       if (!this.formIsValid) {
         return
       }
-      const meetupData = {
-        title: this.title,
-        location: this.location,
-        imageUrl: this.imageUrl,
+      const causedata = {
+        cause_title: this.cause_title,
+        category: this.category,
         description: this.description,
-        date: new Date()
+        cause_target_amt: this.cause_target_amt,
+        cause_expiration_date: new cause_expiration_date(),
+        account_number: this.account_number,
+        code: this.code
       }
-      this.$store.dispatch('createMeetup', meetupData)
-      this.$router.push('/meetups')
+      this.$store.dispatch('createcause', causedata)
+      this.$router.push('/home')
     }
   }
 }
