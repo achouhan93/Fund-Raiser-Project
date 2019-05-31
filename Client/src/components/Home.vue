@@ -20,7 +20,7 @@
               v-bind="{ [`xs${v_binding_flex}`]: true }">
               <v-card>
                 <v-img
-                  v-bind:src="require('@/assets/'+'1.png')"
+                  v-bind:src="require('@/assets/'+ cause.causeimage)"
                   height="200px"
                 >
                   <v-container
@@ -70,6 +70,15 @@ export default {
   },
   mounted () {
     // this.causes = CauseService.getAllCauses().toJSON
+
+    /* axios post template
+    // axios.post(`http://jsonplaceholder.typicode.com/posts`, {
+    //  body: this.postBody
+    // })
+    // .then(response => {})
+    // .catch(e => {
+    //  this.errors.push(e)
+    }) */
     axios
       .get('http://localhost:8085/cause/getAllActiveCauses')
       .then(response => (this.causes = response.data))
