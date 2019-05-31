@@ -5,7 +5,7 @@
         <v-toolbar flat dense class="cyan" dark>
           <v-toolbar-title>Create a Cause</v-toolbar-title>
         </v-toolbar>
-        <form @submit.prevent="onCreatecause">
+        <form>
         <div class="pl-4 pr-4 pb-2 pt-2">
           <br>
           <v-text-field
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -96,7 +97,8 @@ export default {
       cause_target_amt: '',
       cause_expiration_date: null,
       account_number: '',
-      code: ''
+      code: '',
+      status: ' '
     }
   },
   computed: {
@@ -111,7 +113,7 @@ export default {
     }
   },
   methods: {
-    onCreatecause () {
+    createCause () {
       if (!this.formIsValid) {
         return
       }
@@ -120,10 +122,16 @@ export default {
         category: this.category,
         description: this.description,
         cause_target_amt: this.cause_target_amt,
-        cause_expiration_date: new cause_expiration_date(),
+        cause_expiration_date: this.cause_expiration_date,
         account_number: this.account_number,
         code: this.code
       }
+
+      axios.post(`http://localhost:8085/cause/postCause`, {
+        body: this.causedata
+      })
+        .then(response => (this.status = response.data))
+
       this.$store.dispatch('createcause', causedata)
       this.$router.push('/home')
     }
