@@ -65,5 +65,8 @@ public class UserDetailsEntity {
 	@Column(name = "image_name")
 	private String imageName;
 	
+	@Column(name = "gender")
+	private String gender;
+	
 
 }
