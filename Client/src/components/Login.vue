@@ -19,7 +19,7 @@
             <br>
             <div class="error" v-html="error"/>
             <br>
-            <v-btn @click="login" class="cyan btn-login">Login</v-btn>
+            <v-btn @click="navigateTo({name: 'user_home' })" class="cyan btn-login">Login</v-btn>
          </div>
         </div>
       </v-flex>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService'
+// import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
@@ -39,14 +39,17 @@ export default {
   methods: {
     async login () {
       try {
-        const response = await AuthenticationService.login({
+        /* const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
-        console.log(response.data)
+        console.log(response.data) */
       } catch (error) {
         this.error = error.response.data.error
       }
+    },
+    navigateTo (route) {
+      this.$router.push(route)
     }
   }
 }
