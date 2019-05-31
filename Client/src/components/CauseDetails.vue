@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h1>This is CauseDetails Page </h1>
       <h1>{{causeId}}</h1>
     </div>
 </template>
@@ -10,14 +11,10 @@ export default {
   data () {
     return {
       // cause_title: this.$route.params.causeTitle
-      cause: ''
+      cause: '',
+      causeId: this.$route.params.causeId
     }
-  },
-  props: ['causeId']
-  /* async mounted () {
-    const causeId = this.state.route.params.causeId
-    console.log(causeId)
-  } */
+  }
 
 }
 </script>

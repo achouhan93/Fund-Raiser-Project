@@ -31,7 +31,7 @@ export default new Router({
       component: CreateCause
     },
     {
-      path: '/cause_details/',
+      path: '/cause_details/:causeId',
       name: 'cause_details',
       component: CauseDetails
     }

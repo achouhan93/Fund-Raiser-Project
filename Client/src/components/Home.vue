@@ -38,9 +38,9 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <div>
-                    <CauseDetails causeId="1234560"> More </CauseDetails>
-                  </div>
+                  <v-btn>
+                    <router-link v-bind:to="'/cause_details/' + cause.causeId">More</router-link>
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -54,15 +54,12 @@
 <script>
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
-// import { CauseDetails } from './CauseDetails.vue'
-// import CauseService from '@/services/GetCauseService'
 import axios from 'axios'
 export default {
   name: 'Home',
   components: {
     Panel,
     CauseDetails
-    // CauseDetails
   },
   data () {
     return {
