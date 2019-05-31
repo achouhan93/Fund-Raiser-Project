@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class ExceptionUtils {
 
 	public static String getErrorMessageFromError(String string) {
-		return string.substring(11).trim();
+		return string.substring(0, 6) +": "+string.substring(11).trim();
 	}
 
 	public static HttpStatus getHTTPStatusCode(String string) {

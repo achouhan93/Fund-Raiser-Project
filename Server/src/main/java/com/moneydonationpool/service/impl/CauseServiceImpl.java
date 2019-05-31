@@ -72,14 +72,13 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public ResponseEntity<String> deleteCause(int causeId, int userId) {
+	public ResponseEntity<String> deleteCause(int causeId, int userId) throws MoneyDonationPoolException {
 		CauseEntity causeDetails = causeDao.getCauseById(causeId);
 		if (causeDetails.getCreatedBy() != userId) {
-			// custome exception write
-			// throw new UnimitraException(ErrorCodes.USER_IS_NOT_AUTHORISED);
+			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
-		causeDao.deleteCause(causeId);
-		return null;
+		return causeDao.deleteCause(causeId);
+		
 	}
 
 }

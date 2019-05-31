@@ -51,8 +51,7 @@ public class CauseController {
 	}
 
 	@DeleteMapping("/deleteCause")
-	public ResponseEntity<String> deleteCause(@RequestParam int causeId, @RequestParam int userId) {
-		//LOGGER.info(UnimitraConstants.UNI_MITRA_AUDIT + "eventId {}, createdByuserId {}", eventId, createdByuserId);
+	public ResponseEntity<String> deleteCause(@RequestParam int causeId, @RequestParam int userId) throws MoneyDonationPoolException {
 		return causeService.deleteCause(causeId, userId);
 
 	}
