@@ -56,5 +56,16 @@ public class CauseEntity {
 	
 	@Column(name = "created_by")
 	private int createdBy;
+	
+	@Column(name = "cause_for")
+	private String causeFor;
+	
+	@Column(name = "accountNumber")
+	private String bankAccountNumber;
+	
+	@Column(name = "BIC")
+	private String bic;
 
+	@Column(name = "image_name")
+	private String imageName;
 }

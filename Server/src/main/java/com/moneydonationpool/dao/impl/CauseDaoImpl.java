@@ -25,7 +25,7 @@ public class CauseDaoImpl implements CauseDao {
 	@Override
 	public CauseEntity getCauseById(int causeId) {
 		Session session = sessionFactory.getCurrentSession();
-		List<CauseEntity> selectedCauseEntity = session.createQuery("from CauseEntity c where c.isActive=true and causeId="+causeId).getResultList();
+		List<CauseEntity> selectedCauseEntity = session.createQuery("from CauseEntity c where c.isActive=true and c.causeId="+causeId).list();
 		return selectedCauseEntity.get(0);
 	}
 
