@@ -3,7 +3,7 @@
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <v-img
-          v-bind:src="require('@/assets/'+'1.png')"
+          v-bind:src="require('@/assets/'+ cause.imageName)"
           height="200px"
         ></v-img>
 
