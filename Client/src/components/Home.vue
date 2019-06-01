@@ -20,7 +20,7 @@
               v-bind="{ [`xs${v_binding_flex}`]: true }">
               <v-card>
                 <v-img
-                  v-bind:src="require('@/assets/'+'1.png')"
+                  v-bind:src="require('@/assets/'+ cause.imageName)"
                   height="200px"
                 >
                   <v-container
