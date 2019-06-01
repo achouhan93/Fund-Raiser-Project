@@ -112,7 +112,10 @@ export default {
     }
   },
   methods: {
-    createCause () {
+    navigateTo (route) {
+      this.$router.push(route)
+    },
+    async createCause () {
       if (!this.formIsValid) {
         return
       }
@@ -131,13 +134,12 @@ export default {
         'active': true
       }
 
-      axios.post(`http://localhost:8085/cause/postCause?userId=8`,
+      await axios.post(`http://localhost:8085/cause/postCause?userId=8`,
         causedata
       )
         .then(response => (this.status = response.data))
 
-      this.$store.dispatch('createcause', causedata)
-      this.$router.push('/home')
+      this.navigateTo({ name: 'home' })
     }
   }
 }
