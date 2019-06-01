@@ -60,7 +60,6 @@
               v-model="cause_expiration_date"
               :max="new Date().toISOString().substr(0, 10)"
               min="1950-01-01"
-              @change="save"
             ></v-date-picker>
           </v-menu>
           <br>

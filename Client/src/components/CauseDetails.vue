@@ -3,7 +3,7 @@
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <v-img
-          v-bind:src="require('@/assets/'+ cause.imageName)"
+          v-bind:src="require('@/assets/'+ cause.data.imageName)"
           height="200px"
         ></v-img>
 
@@ -46,7 +46,7 @@ export default {
   },
   async mounted () {
     this.cause = await GetCauseService.getCauseById(this.causeId)
-    console.log(this.cause.data)
+    console.log(this.cause)
   }
 }
 </script>
