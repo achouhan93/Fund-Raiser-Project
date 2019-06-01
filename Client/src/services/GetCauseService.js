@@ -1,17 +1,18 @@
-import Api from '@/services/Api'
+import axios from 'axios'
 export default {
   getAllCauses: async function () {
-    var url = 'http://localhost:8085/cause/getAllActiveCauses'
-    var data = ' '
-    var res = ' '
-    fetch(url)
-      .then(res => res.json())
-      .then(data => console.log(data))
-    console.log('res' + res)
-    return data
+    return axios
+      .get('http://localhost:8085/cause/getAllActiveCauses')
+      .then(response => (this.causes = response.data))
   },
   getCauseById (causeId) {
-    // eslint-disable-next-line no-template-curly-in-string
-    return Api().get('cause/getCauseById?causeId=' + causeId)
+    return axios
+      .get('http://localhost:8085/cause/getCauseById?causeId=' + causeId)
+      .then(response => (this.causes = response.data))
+  },
+  getCauseByCategoryId (categoryId) {
+    return axios
+      .get('http://localhost:8085/cause/getCauseByCategory?categoryId=' + categoryId)
+      .then(response => (this.causes = response.data))
   }
 }

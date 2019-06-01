@@ -55,5 +55,17 @@ public class CauseController {
 		return causeService.deleteCause(causeId, userId);
 
 	}
+	
+	@GetMapping("/getCauseByCategory")
+	public List<CauseEntity> getCauseByCategory(@RequestParam int categoryId) {
+		LOGGER.info("getCauseById service called");
+		return causeService.getCauseByCategory(categoryId);
+	}
+	
+	@GetMapping("/getCauseByNameAndCategory")
+	public List<CauseEntity> getCauseByNameAndCategory(@RequestParam String causeName, @RequestParam int categoryId) {
+		LOGGER.info("getCauseByNameAndCategory service called");
+		return causeService.getCauseByNameAndCategory(causeName, categoryId);
+	}
 
 }

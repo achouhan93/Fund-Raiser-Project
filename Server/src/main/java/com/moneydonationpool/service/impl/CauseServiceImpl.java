@@ -81,4 +81,16 @@ public class CauseServiceImpl implements CauseService {
 		
 	}
 
+	@Override
+	public List<CauseEntity> getCauseByCategory(int categoryId) {
+		List<CauseEntity> AllCauseList = causeDao.getCauseByCategory(categoryId);
+		return AllCauseList;
+	}
+
+	@Override
+	public List<CauseEntity> getCauseByNameAndCategory(String causeName, int categoryId) {
+		List<CauseEntity> AllCauseList = causeDao.getCauseByNameAndCategory(causeName, categoryId);
+		return AllCauseList;
+	}
+
 }

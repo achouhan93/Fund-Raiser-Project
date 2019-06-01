@@ -4,9 +4,25 @@
       <v-toolbar class="cyan">
         <v-toolbar-title class="home_title">Discover</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>search</v-icon>
-        </v-btn>
+        <v-flex xs12 sm6 md3>
+          <v-text-field
+            class="mx-3 search_field"
+            flat
+            label="Search"
+            solo
+            v-model="cause_name"
+          ></v-text-field> </v-flex>
+        <v-flex xs12 sm6 md3>
+          <v-select
+            class="mx-3 search_field"
+            :items="category"
+            item-value="categoryValue"
+            item-text="categoryName"
+            label="Category"
+            @change="searchCausefilter"
+            name="search_category"
+            solo></v-select>
+        </v-flex>
       </v-toolbar>
       <v-card>
         <v-container
@@ -54,7 +70,8 @@
 <script>
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
-import axios from 'axios'
+import GetCauseService from '@/services/GetCauseService'
+
 export default {
   name: 'Home',
   components: {
@@ -65,14 +82,18 @@ export default {
     return {
       causes: [],
       v_binding_flex: 6,
-      causeId: '123'
+      causeId: '123',
+      cause_name: ' ',
+      category: [
+        { categoryName: 'All', categoryValue: 0 },
+        { categoryName: 'Natural Disaster', categoryValue: 1 },
+        { categoryName: 'Personal', categoryValue: 2 },
+        { categoryName: 'Education', categoryValue: 3 }
+      ]
     }
   },
-  mounted () {
-    // this.causes = CauseService.getAllCauses().toJSON
-    axios
-      .get('http://localhost:8085/cause/getAllActiveCauses')
-      .then(response => (this.causes = response.data))
+  async mounted () {
+    this.causes = await GetCauseService.getAllCauses()
   },
   methods: {
     async cause_detail (cause) {
@@ -80,6 +101,17 @@ export default {
     },
     navigateTo (route) {
       this.$router.push(route)
+    },
+    async searchCausefilter (searchCategory) {
+      console.log('name ', this.cause_name)
+      console.log('search ', searchCategory)
+      console.log('http://localhost:8085/cause/getCauseByCategory?categoryId=1')
+
+      if (searchCategory > 0) {
+        this.causes = await GetCauseService.getCauseByCategoryId(searchCategory)
+      } else {
+        this.causes = await GetCauseService.getAllCauses()
+      }
     }
   }
 }
@@ -89,5 +121,10 @@ console.log(this.causes)
 <style>
   .home_title{
     color: white;
+  }
+  .search_field {
+    margin: 10px auto auto;
+    border: 1px;
+
   }
 </style>

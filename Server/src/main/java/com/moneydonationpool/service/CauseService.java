@@ -19,8 +19,8 @@ public interface CauseService {
 
 	ResponseEntity<String> deleteCause(int causeId, int userId) throws MoneyDonationPoolException;
 
+	List<CauseEntity>  getCauseByCategory(int categoryId);
 	
-
-	
+	List<CauseEntity>  getCauseByNameAndCategory(String causeName, int categoryId);	
 
 }

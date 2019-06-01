@@ -62,4 +62,23 @@ public class CauseDaoImpl implements CauseDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public List<CauseEntity> getCauseByCategory(int categoryId) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId).list();
+		
+	}
+
+	@Override
+	public List<CauseEntity> getCauseByNameAndCategory(String causeName, int categoryId) {
+		Session session = sessionFactory.getCurrentSession();
+		if(categoryId > 0) {
+			return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId+" c.causeTitle LIKE %"+causeName+"%").list();
+		}else {
+			//return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle LIKE %"+causeName+"%").list();
+			return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId+" c.causeTitle LIKE %"+causeName+"%").list();
+		}
+		
+	}
+
 }
