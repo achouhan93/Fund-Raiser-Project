@@ -116,19 +116,24 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      const causedata = {
-        cause_title: this.cause_title,
-        category: this.category,
-        description: this.description,
-        cause_target_amt: this.cause_target_amt,
-        cause_expiration_date: this.cause_expiration_date,
-        account_number: this.account_number,
-        code: this.code
+      var causedata = {
+        'categoryId': 1,
+        'causeTargetAmt': Number(this.cause_target_amt),
+        'creationDate': this.cause_expiration_date,
+        'causeExpirationDate': this.cause_expiration_date,
+        'description': this.description,
+        'collectedAmt': 0,
+        'causeTitle': this.cause_title,
+        'createdBy': 8,
+        'bankAccountNumber': this.account_number,
+        'bic': this.code,
+        'imageName': '1.png',
+        'active': true
       }
 
-      axios.post(`http://localhost:8085/cause/postCause`, {
-        body: this.causedata
-      })
+      axios.post(`http://localhost:8085/cause/postCause?userId=8`,
+        causedata
+      )
         .then(response => (this.status = response.data))
 
       this.$store.dispatch('createcause', causedata)
