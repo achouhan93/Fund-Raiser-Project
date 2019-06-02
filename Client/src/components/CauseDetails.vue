@@ -9,18 +9,18 @@
 
         <v-card-title primary-title>
           <div>
-            <h3 class="headline causeTitle">{{ cause.data.causeTitle }}</h3>
-            <div>{{ cause.data.description }} </div>
+            <h3 class="headline causeTitle">{{ cause.causeTitle }}</h3>
+            <div>{{ cause.description }} </div>
           </div>
         </v-card-title>
 
         <v-card-actions>
   <div>
           <div class="targetamount">Target Amount:</div>
-         {{cause.data.causeTargetAmt}}
+         {{cause.causeTargetAmt}}
           <br>
           <div class="collectedamount"> Collected Amount: </div>
-          {{cause.data.collectedAmt}}
+          {{cause.collectedAmt}}
   </div>
           <v-spacer></v-spacer>
           <v-btn class="cyan btn-update">Update</v-btn>
@@ -46,7 +46,7 @@ export default {
   },
   async mounted () {
     this.cause = await GetCauseService.getCauseById(this.causeId)
-    console.log(this.cause.data)
+    console.log(this.cause)
   }
 }
 </script>
