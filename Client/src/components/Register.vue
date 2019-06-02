@@ -14,18 +14,23 @@
                placeholder="your first name"
                v-validate="'required'"
                v-model="firstName"></v-text-field>
-             <span v-show="errors.has('first name')" class="dangerous" >{{ errors.first('first name') }}</span>
+             <span v-show="errors.has('first name')" class="error--text" >{{ errors.first('first name') }}</span>
              <br>
              <v-text-field
                label="Last name"
+               name="last name"
                placeholder="your last name"
+               v-validate="'required'"
                v-model="lastName"></v-text-field>
-             <div class="error" v-html="error"></div>
+             <span v-show="errors.has('last name')" class="error--text" >{{ errors.first('last name') }}</span>
              <br>
              <v-select
                :items="genders"
+               name="gender"
+               v-validate="'required'"
                label="Gender"
                v-model="genders"></v-select>
+             <span v-show="errors.has('gender')" class="error--text" >{{ errors.first('gender') }}</span>
              <br>
              <v-menu
                ref="menu"
@@ -58,35 +63,49 @@
              <br>
              <v-text-field
                label="Email"
-               placeholder="email"
+               name="Email"
+               ref="Email"
+               placeholder="Email"
+               v-validate="'required|email'"
                v-model="email"></v-text-field>
+             <span v-show="errors.has('Email')" class="error--text" >{{ errors.first('Email') }}</span>
              <br>
              <v-text-field
                label="Confirm Email"
+               name="cnfemail"
+               data-vv-as="Email"
                placeholder="re-enter email"
+               v-validate="'required|email|confirmed:Email'"
                v-model="cnfEmail"></v-text-field>
+             <span v-show="errors.has('cnfemail')" class="error--text">{{ errors.first('cnfemail') }}</span>
              <br>
              <v-text-field
                :append-icon="show3 ? 'visibility' : 'visibility_off'"
                :rules="[rules.required, rules.min]"
                :type="show3 ? 'text' : 'password'"
-               name="input-10-2"
+               name="aPassword"
+               ref="apwd"
+               v-validate="'required'"
                label="Password"
                hint="At least 8 characters"
                class="input-group--focused"
                @click:append="show3 = !show3"
              ></v-text-field>
+             <span v-show="errors.has('aPassword')" class="error--text">{{ errors.first('aPassword') }}</span>
              <br>
              <v-text-field
                :append-icon="show3 ? 'visibility' : 'visibility_off'"
                :rules="[rules.required, rules.min]"
                :type="show3 ? 'text' : 'password'"
-               name="input-10-2"
+               name="cnfPassword"
+               data-vv-as="Password"
+               v-validate="'required|confirmed:apwd'"
                label="Re-Enter Password"
                hint="At least 8 characters"
                class="input-group--focused"
                @click:append="show3 = !show3"
              ></v-text-field>
+             <span v-show="errors.has('cnfPassword')" class="error--text">{{ errors.first('cnfPassword') }}</span>
              <br>
              <VuePhoneNumberInput v-model="phNum" />
             <v-btn @click="regi1" class="cyan btn-register">Register</v-btn>
