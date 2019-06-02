@@ -5,10 +5,14 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import 'vue-tel-input/dist/vue-tel-input.css'
+import 'vue-phone-number-input/dist/vue-phone-number-input.css'
+import VeeValidate from 'vee-validate'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
+Vue.use(VeeValidate)
 
 /* eslint-disable no-new */
 new Vue({

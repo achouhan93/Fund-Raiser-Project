@@ -9,19 +9,23 @@
            <div class="pl-4 pr-4 pb-2 pt-2">
             <br>
              <v-text-field
+               name="first name"
                label="First name"
                placeholder="your first name"
-               v-model="fname"></v-text-field>
+               v-validate="'required'"
+               v-model="firstName"></v-text-field>
+             <span v-show="errors.has('first name')" class="dangerous" >{{ errors.first('first name') }}</span>
              <br>
              <v-text-field
                label="Last name"
                placeholder="your last name"
-               v-model="lname"></v-text-field>
-            <div class="error" v-html="error"></div>
+               v-model="lastName"></v-text-field>
+             <div class="error" v-html="error"></div>
              <br>
              <v-select
                :items="genders"
-               label="Gender"></v-select>
+               label="Gender"
+               v-model="genders"></v-select>
              <br>
              <v-menu
                ref="menu"
@@ -60,18 +64,18 @@
              <v-text-field
                label="Confirm Email"
                placeholder="re-enter email"
-               v-model="cnf_email"></v-text-field>
+               v-model="cnfEmail"></v-text-field>
              <br>
-               <v-text-field
-                 :append-icon="show3 ? 'visibility' : 'visibility_off'"
-                 :rules="[rules.required, rules.min]"
-                 :type="show3 ? 'text' : 'password'"
-                 name="input-10-2"
-                 label="Password"
-                 hint="At least 8 characters"
-                 class="input-group--focused"
-                 @click:append="show3 = !show3"
-               ></v-text-field>
+             <v-text-field
+               :append-icon="show3 ? 'visibility' : 'visibility_off'"
+               :rules="[rules.required, rules.min]"
+               :type="show3 ? 'text' : 'password'"
+               name="input-10-2"
+               label="Password"
+               hint="At least 8 characters"
+               class="input-group--focused"
+               @click:append="show3 = !show3"
+             ></v-text-field>
              <br>
              <v-text-field
                :append-icon="show3 ? 'visibility' : 'visibility_off'"
@@ -84,7 +88,8 @@
                @click:append="show3 = !show3"
              ></v-text-field>
              <br>
-            <v-btn @click="register" class="cyan btn-register">Register</v-btn>
+             <VuePhoneNumberInput v-model="phNum" />
+            <v-btn @click="regi1" class="cyan btn-register">Register</v-btn>
          </div>
         </div>
       </v-flex>
@@ -93,15 +98,24 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import axios from 'axios'
+import VueTelInput from 'vue-tel-input'
+import VuePhoneNumberInput from 'vue-phone-number-input'
+
 export default {
+  components: {
+    VueTelInput,
+    VuePhoneNumberInput
+  },
   data () {
     return {
-      fname: '',
-      lname: '',
+      firstName: '',
+      lastName: '',
       email: '',
-      cnf_email: '',
+      cnfEmail: '',
       password: '',
       error: null,
+      phNum: '',
       genders: ['Male', 'Female'],
       date: null,
       menu: false,
@@ -112,7 +126,7 @@ export default {
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => ('The email and password you entered don\'t match')
+        emailMatch: () => ('The email and password you entered dont match')
       }
     }
   },
@@ -130,6 +144,34 @@ export default {
     },
     save (date) {
       this.$refs.menu.save(date)
+    },
+    regi1: function () {
+      console.log(this.firstName, this.lastName)
+      var currDate = new Date()
+      var month = ('0' + (currDate.getMonth() + 1)).slice(-2)
+      var date = ('0' + currDate.getDate()).slice(-2)
+      var year = currDate.getFullYear()
+      var DateToPass = year + '-' + month + '-' + date
+      console.log(DateToPass)
+
+      const userBody = {
+        'firstName': this.firstName,
+        'lastName': this.lastName,
+        'emailId': this.email,
+        'dob': this.date,
+        'gender': this.genders,
+        'isActive': true,
+        'userType': 'user',
+        'phNo': this.phNum,
+        'creation_date': DateToPass
+      }
+      axios.post(`http://localhost:8085/user/registerUser`, userBody
+      )
+        .then(response => {
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   },
   watch: {
