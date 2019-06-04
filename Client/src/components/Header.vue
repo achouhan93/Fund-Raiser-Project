@@ -5,15 +5,12 @@
           </span>
           </v-toolbar-title>
         <v-toolbar-items>
-            <v-btn flat dark> Browse Causes </v-btn>
-        </v-toolbar-items>
-        <v-toolbar-items>
             <v-btn flat dark @click="navigateTo({name: 'createcause' })"> Create Cause </v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items>
             <v-btn flat dark @click="navigateTo({name: 'register' })">
-                SignUp
+                Register
             </v-btn>
             <v-btn flat dark @click="navigateTo({name: 'login' })">
                 Login
