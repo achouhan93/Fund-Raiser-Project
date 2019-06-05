@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/cause")
 public class CauseController {
 	
@@ -41,6 +39,12 @@ public class CauseController {
 		return causeService.getCauseById(causeId);
 	}
 	
+	@GetMapping("/SearchCause")
+	public List<CauseEntity> SearchCause(@RequestParam(required = false) String causeName,@RequestParam(required = false) Integer categoryId ) {
+		LOGGER.info("SearchCause");
+		return causeService.SearchCause(causeName,categoryId);
+	}
+	
 	@PostMapping("/postCause")
 	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@RequestParam int userId) throws MoneyDonationPoolException {
 		LOGGER.info("psotCause");
@@ -56,18 +60,6 @@ public class CauseController {
 	public ResponseEntity<String> deleteCause(@RequestParam int causeId, @RequestParam int userId) throws MoneyDonationPoolException {
 		return causeService.deleteCause(causeId, userId);
 
-	}
-	
-	@GetMapping("/getCauseByCategory")
-	public List<CauseEntity> getCauseByCategory(@RequestParam int categoryId) {
-		LOGGER.info("getCauseById service called");
-		return causeService.getCauseByCategory(categoryId);
-	}
-	
-	@GetMapping("/getCauseByNameAndCategory")
-	public List<CauseEntity> getCauseByNameAndCategory(@RequestParam String causeName, @RequestParam int categoryId) {
-		LOGGER.info("getCauseByNameAndCategory service called");
-		return causeService.getCauseByNameAndCategory(causeName, categoryId);
 	}
 
 }

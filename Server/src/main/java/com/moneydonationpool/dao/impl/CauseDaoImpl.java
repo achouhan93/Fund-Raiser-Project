@@ -55,30 +55,14 @@ public class CauseDaoImpl implements CauseDao {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
-	
+	@Override
+	public List<CauseEntity> searchCause(String causeName, Integer categoryId) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle like '%"+causeName+"%' or c.categoryId="+categoryId).list();
+	}
 	
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-
-	@Override
-	public List<CauseEntity> getCauseByCategory(int categoryId) {
-		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId).list();
-		
-	}
-
-	@Override
-	public List<CauseEntity> getCauseByNameAndCategory(String causeName, int categoryId) {
-		Session session = sessionFactory.getCurrentSession();
-		if(categoryId > 0) {
-			return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId+" c.causeTitle LIKE %"+causeName+"%").list();
-		}else {
-			//return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle LIKE %"+causeName+"%").list();
-			return session.createQuery("from CauseEntity c where c.isActive=true and c.categoryId="+categoryId+" c.causeTitle LIKE %"+causeName+"%").list();
-		}
-		
-	}
-
 }

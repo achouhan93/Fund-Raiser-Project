@@ -9,7 +9,7 @@ import com.moneydonationpool.model.UserDetailsModel;
 
 public interface UserDetailsService {
 
-	UserDetailsModel getUserDetails(int userId);
+	UserDetailsModel getUserDetails(int userId, String emailId);
 
 	UserDetailsEntity registerUser(UserDetailsEntity userDetailsEntity) throws MoneyDonationPoolException;
 

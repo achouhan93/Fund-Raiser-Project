@@ -59,9 +59,6 @@ public class UserDetailsEntity {
 	@Column(name = "user_type")
 	private String userType;
 	
-	@Column(name = "account_balence")
-	private String accountBalence;
-	
 	@Column(name = "image_name")
 	private String imageName;
 	

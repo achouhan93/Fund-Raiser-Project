@@ -41,7 +41,7 @@ public class CauseServiceImpl implements CauseService {
 	public CauseEntity postCause(CauseEntity postCauseDetails, int userId) throws MoneyDonationPoolException {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		
-		UserDetailsEntity userDetailsEntity =  userDetailsDao.getUserDetails(userId);
+		UserDetailsEntity userDetailsEntity =  userDetailsDao.getUserDetails(userId,"");
 		
 		if (!userDetailsEntity.getUserType().equalsIgnoreCase("Admin")) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
@@ -82,15 +82,8 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public List<CauseEntity> getCauseByCategory(int categoryId) {
-		List<CauseEntity> AllCauseList = causeDao.getCauseByCategory(categoryId);
-		return AllCauseList;
-	}
-
-	@Override
-	public List<CauseEntity> getCauseByNameAndCategory(String causeName, int categoryId) {
-		List<CauseEntity> AllCauseList = causeDao.getCauseByNameAndCategory(causeName, categoryId);
-		return AllCauseList;
+	public List<CauseEntity> SearchCause(String causeName, Integer categoryId) {
+		return causeDao.searchCause(causeName,categoryId);
 	}
 
 }
