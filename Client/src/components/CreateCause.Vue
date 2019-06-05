@@ -13,6 +13,7 @@
             label="Title"
             id="cause_title"
             v-model="cause_title"
+            :rules="[rules.required, rules.min]"
             required></v-text-field>
           <br>
           <v-select
@@ -25,8 +26,17 @@
             id="description"
             multi-line
             v-model="description"
+            :rules="[rules.required, rules.min]"
             required></v-text-field>
           <br>
+          <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+          <input
+            type="file"
+            style="display: none"
+            ref="fileInput"
+            accept="image/*"
+            @change="onFilePicked">
+          <img v-bind:src="imagePreview" v-show="showPreview"/>
           <br>
           <v-text-field
             name="in euros"
@@ -58,8 +68,8 @@
             <v-date-picker
               ref="picker"
               v-model="cause_expiration_date"
-              :max="new Date().toISOString().substr(0, 10)"
-              min="1950-01-01"
+              :min="new Date().toISOString().substr(0, 10)"
+              max="2025-01-01"
             ></v-date-picker>
           </v-menu>
           <br>
@@ -97,7 +107,13 @@ export default {
       cause_expiration_date: null,
       account_number: '',
       code: '',
-      status: ' '
+      image: null,
+      status: ' ',
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered dont match')
+      }
     }
   },
   computed: {
@@ -108,6 +124,7 @@ export default {
         this.cause_target_amt !== '' &&
         this.cause_expiration_date !== '' &&
         this.account_number !== '' &&
+        this.imageUrl !== '' &&
         this.code !== ''
     }
   },
@@ -117,6 +134,9 @@ export default {
     },
     async createCause () {
       if (!this.formIsValid) {
+        return
+      }
+      if (!this.image) {
         return
       }
       var causedata = {
@@ -131,7 +151,8 @@ export default {
         'bankAccountNumber': this.account_number,
         'bic': this.code,
         'imageName': '1.png',
-        'active': true
+        'active': true,
+        image: this.image
       }
 
       await axios.post(`http://localhost:8085/cause/postCause?userId=8`,
@@ -140,7 +161,24 @@ export default {
         .then(response => (this.status = response.data))
 
       this.navigateTo({ name: 'home' })
+    },
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Please add a valid file!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
+
   }
 }
 </script>
