@@ -94,6 +94,7 @@ export default {
   },
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
+    console.log(this.causes)
   },
   methods: {
     async cause_detail (cause) {
@@ -105,13 +106,8 @@ export default {
     async searchCausefilter (searchCategory) {
       console.log('name ', this.cause_name)
       console.log('search ', searchCategory)
-      console.log('http://localhost:8085/cause/getCauseByCategory?categoryId=1')
-
-      if (searchCategory > 0) {
-        this.causes = await GetCauseService.getCauseByCategoryId(searchCategory)
-      } else {
-        this.causes = await GetCauseService.getAllCauses()
-      }
+      this.causes = await GetCauseService.getCauseByNameAndCategoryId(this.cause_name, searchCategory)
+      console.log('res', this.causes)
     }
   }
 }
