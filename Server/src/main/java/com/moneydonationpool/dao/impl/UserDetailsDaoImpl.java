@@ -9,25 +9,37 @@ import org.springframework.stereotype.Repository;
 
 import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.model.DonationModel;
 
 @Repository
-public class UserDetailsDaoImpl implements UserDetailsDao  {
+public class UserDetailsDaoImpl implements UserDetailsDao {
 	SessionFactory sessionFactory;
-	
+
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	@Override
 	public UserDetailsEntity getUserDetails(int userId) {
 		Session session = sessionFactory.getCurrentSession();
-		List<UserDetailsEntity> userDetailsEntity = session.createQuery("from UserDetailsEntity u where u.isActive=true and userId="+userId).list();
+		@SuppressWarnings("unchecked")
+		List<UserDetailsEntity> userDetailsEntity = session
+				.createQuery("from UserDetailsEntity u where u.isActive=true and userId=" + userId).list();
 		return userDetailsEntity.get(0);
 	}
-	
+
+	@Override
+	public int getUserIdByEmailId(String emailId) {
+		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<UserDetailsEntity> userDetailsEntity = session.createQuery("from UserDetailsEntity u where u.isActive=true and u.emailId='" + emailId+"'").list();
+		 return userDetailsEntity.get(0).getUserId();
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getExsistingEmails() {
 		Session session = sessionFactory.getCurrentSession();
@@ -51,18 +63,27 @@ public class UserDetailsDaoImpl implements UserDetailsDao  {
 	@Override
 	public List<DonationModel> getUserDonations(int userId) {
 		Session session = sessionFactory.getCurrentSession();
-		List<DonationModel> userDonation = session.createQuery("select c.causeTitle,d.amountDonated from DonationEntity d join CauseEntity c on c.causeId = d.causeId where d.donatedBy =1").list();
+		@SuppressWarnings("unchecked")
+		List<DonationModel> userDonation = session.createQuery(
+				"select c.causeTitle,d.amountDonated from DonationEntity d join CauseEntity c on c.causeId = d.causeId where d.donatedBy =1")
+				.list();
 		return userDonation;
 	}
 
 	@Override
 	public List<CauseEntity> getUserCreatedCause(int userId) {
 		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
 		List<CauseEntity> userCauses = session.createQuery("from CauseEntity c where c.createdBy =1").list();
 		return userCauses;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String userTokenRegistery(LoginEntity loginEntity) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(loginEntity);
+		return "Success";
+	}
+
+
 }
