@@ -94,6 +94,9 @@ export default {
   },
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
+    if (this.causes != null) {
+      console.log('Not Empty')
+    }
   },
   methods: {
     async cause_detail (cause) {

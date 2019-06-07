@@ -108,6 +108,7 @@
              <span v-show="errors.has('cnfPassword')" class="error--text">{{ errors.first('cnfPassword') }}</span>
              <br>
              <VuePhoneNumberInput v-model="phNum" />
+             <br>
             <v-btn @click="regi1" class="cyan btn-register">Register</v-btn>
          </div>
         </div>
