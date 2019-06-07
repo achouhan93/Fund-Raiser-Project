@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.model.DonationModel;
@@ -61,6 +62,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserDetailsEntity userDetailsEntity = userDetailsDao.getUserDetails(userToPromote);
 		userDetailsEntity.setUserType("Admin");
 		return userDetailsDao.PromoteToAdmin(userDetailsEntity);
+	}
+
+	@Override
+	public int userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException {
+		int userId = userDetailsDao.getUserIdByEmailId(emailId);
+		LoginEntity loginEntity = new LoginEntity();
+		loginEntity.setAccessToken(accessToken);
+		loginEntity.setUserId(userId);
+		
+		String loginStatus = userDetailsDao.userTokenRegistery(loginEntity);
+		if(!loginStatus.equalsIgnoreCase("success"))
+		{
+			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.SOMETHING_WENT_WRONG);
+		}
+		return userId;
+		
 	}
 
 }

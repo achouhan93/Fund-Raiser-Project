@@ -16,4 +16,7 @@ public class ErrorCodes {
 	
 	public static final String TARGET_AMOUNT_EXCEEDS = "MDP003 " + HttpStatus.NOT_ACCEPTABLE.value()
 	+ ": selected Donate amount is exceeds the remaining target donation amount";
+	
+	public static final String SOMETHING_WENT_WRONG = "MDP004 " + HttpStatus.NOT_MODIFIED.value()
+	+ ": selected Donate amount is exceeds the remaining target donation amount";
 }
