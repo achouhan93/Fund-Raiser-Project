@@ -45,20 +45,20 @@ public class CauseDaoImpl implements CauseDao {
 	}
 	
 	@Override
-	public ResponseEntity<String> deleteCause(int causeId) {
+	public ResponseEntity<String> deacticateCause(int causeId) {
 		Session session = sessionFactory.getCurrentSession();
 		CauseEntity deleteCause = session.get(CauseEntity.class, causeId);
 		//UnimitraUtility.nullCheckForEntity(deleteEventById, ErrorCodes.EVENT_NOT_PRESENT_FOR_EVENTID);
 
 		deleteCause.setActive(false);
 		session.update(deleteCause);
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@Override
-	public List<CauseEntity> searchCause(String causeName, Integer categoryId) {
+	public List<CauseEntity> searchCause(String searchString, Integer categoryId) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle like '%"+causeName+"%' or c.categoryId="+categoryId).list();
+		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle like '%"+searchString+"%' or c.categoryId="+categoryId).list();
 	}
 	
 	@Autowired

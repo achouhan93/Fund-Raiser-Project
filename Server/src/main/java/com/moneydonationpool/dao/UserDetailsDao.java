@@ -10,7 +10,7 @@ import com.moneydonationpool.model.UserDetailsModel;
 
 public interface UserDetailsDao {
 
-	UserDetailsEntity getUserDetails(int userId, String emailId);
+	UserDetailsEntity getUserDetails(int userId);
 
 	List<String> getExsistingEmails();
 

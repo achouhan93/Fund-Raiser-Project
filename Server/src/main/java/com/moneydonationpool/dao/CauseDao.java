@@ -16,9 +16,9 @@ public interface CauseDao {
 	
 	CauseEntity updateCause(CauseEntity updateCause);
 
-	ResponseEntity<String> deleteCause(int causeId);
+	ResponseEntity<String> deacticateCause(int causeId);
 
-	List<CauseEntity> searchCause(String causeName, Integer categoryId);
+	List<CauseEntity> searchCause(String searchString, Integer categoryId);
 
 	
 
