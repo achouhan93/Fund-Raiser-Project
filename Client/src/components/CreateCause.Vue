@@ -26,7 +26,7 @@
             id="description"
             multi-line
             v-model="description"
-            :rules="[rules.required, rules.min]"
+            :rules="[rules.required, rules.minLength]"
             required></v-text-field>
           <br>
           <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
@@ -111,7 +111,8 @@ export default {
       status: ' ',
       rules: {
         required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
+        min: v => v.length >= 8 || 'Minimum 8 characters',
+        minLength: v => v.length >= 100 || 'Minimum 100 Words',
         emailMatch: () => ('The email and password you entered dont match')
       }
     }
