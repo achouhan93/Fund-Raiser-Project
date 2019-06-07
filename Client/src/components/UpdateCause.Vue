@@ -13,8 +13,8 @@
             label="Title"
             id="cause_title"
             v-model="cause_title"
-            :rules="[rules.required, rules.min]"
-            required></v-text-field>
+            :disabled="isDisabled"
+            ></v-text-field>
           <br>
           <v-select
             :items="category"
@@ -77,6 +77,7 @@
           name="Please enter the Account Number"
           label="Account number"
           id="account_number"
+          :disabled="isDisabled"
           v-model="account_number"
           required></v-text-field>
           <br>
@@ -84,10 +85,11 @@
             name="Please enter the BIC Code"
             label="BIC Code"
             id="code"
+            :disabled="isDisabled"
             v-model="code"
             required></v-text-field>
           <br>
-          <v-btn @click="createCause" class="cyan btn-createCause">Create Cause</v-btn>
+          <v-btn @click="updateCause" class="cyan btn-updateCause">Update Cause</v-btn>
         </div>
         </form>
       </div>
@@ -109,6 +111,7 @@ export default {
       code: '',
       image: null,
       status: ' ',
+      isDisabled: true,
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Minimum 8 characters',
@@ -118,14 +121,12 @@ export default {
   },
   computed: {
     formIsValid () {
-      return this.cause_title !== '' &&
+      return 
         this.category !== '' &&
         this.description !== '' &&
         this.cause_target_amt !== '' &&
         this.cause_expiration_date !== '' &&
-        this.account_number !== '' &&
-        this.imageUrl !== '' &&
-        this.code !== ''
+        this.imageUrl !== '' 
     }
   },
   methods: {
@@ -139,12 +140,11 @@ export default {
       if (!this.image) {
         return
       }
-      var today = new Date()
-
+      
       var causedata = {
         'categoryId': 1,
         'causeTargetAmt': Number(this.cause_target_amt),
-        'creationDate': today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+        'creationDate': this.cause_expiration_date,
         'causeExpirationDate': this.cause_expiration_date,
         'description': this.description,
         'collectedAmt': 0,
