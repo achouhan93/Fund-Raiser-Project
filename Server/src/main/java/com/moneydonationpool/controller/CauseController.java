@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,38 +29,38 @@ public class CauseController {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
-	@GetMapping("/getAllActiveCauses")
+	@GetMapping("/")
 	public List<CauseEntity> getAllActiveCauses() {
 		LOGGER.info("getAllActiveCauses servvice called");
 		return causeService.getAllActiveCauses();
 	}
 	
-	@GetMapping("/getCauseById")
-	public CauseEntity getCauseById(@RequestParam int causeId) {
+	@GetMapping("/{causeId}")
+	public CauseEntity getCauseById(@PathVariable  int causeId) {
 		LOGGER.info("getCausesById");
 		return causeService.getCauseById(causeId);
 	}
 	
-	@GetMapping("/SearchCause")
-	public List<CauseEntity> SearchCause(@RequestParam(required = false) String causeName,@RequestParam(required = false) Integer categoryId ) {
+	@GetMapping(value = "/",params = { "searchString", "categoryId" })
+	public List<CauseEntity> SearchCause(@RequestParam String searchString,@RequestParam Integer categoryId ) {
 		LOGGER.info("SearchCause");
-		return causeService.SearchCause(causeName,categoryId);
+		return causeService.SearchCause(searchString,categoryId);
 	}
 	
-	@PostMapping("/postCause")
-	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@RequestParam int userId) throws MoneyDonationPoolException {
-		LOGGER.info("psotCause");
+	@PostMapping("/{userId}")
+	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@PathVariable int userId) throws MoneyDonationPoolException {
+		LOGGER.info("postCause");
 		return causeService.postCause(postCauseDetails,userId);
 	}
 	
-	@PostMapping("/updateCause")
-	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @RequestParam int userId) throws MoneyDonationPoolException {
+	@PutMapping("/{userId}")
+	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @PathVariable int userId) throws MoneyDonationPoolException {
 		return causeService.updateCause(updateCause,userId);
 	}
 
-	@DeleteMapping("/deleteCause")
-	public ResponseEntity<String> deleteCause(@RequestParam int causeId, @RequestParam int userId) throws MoneyDonationPoolException {
-		return causeService.deleteCause(causeId, userId);
+	@DeleteMapping(value = "/", params = { "causeId", "userId" })
+	public ResponseEntity<String> deacticateCause(@RequestParam int causeId, @RequestParam int userId) throws MoneyDonationPoolException {
+		return causeService.deacticateCause(causeId, userId);
 
 	}
 

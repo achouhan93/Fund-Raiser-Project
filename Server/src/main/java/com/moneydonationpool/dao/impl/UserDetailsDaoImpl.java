@@ -22,7 +22,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao  {
 	}
 	
 	@Override
-	public UserDetailsEntity getUserDetails(int userId,String emailId) {
+	public UserDetailsEntity getUserDetails(int userId) {
 		Session session = sessionFactory.getCurrentSession();
 		List<UserDetailsEntity> userDetailsEntity = session.createQuery("from UserDetailsEntity u where u.isActive=true and userId="+userId).list();
 		return userDetailsEntity.get(0);

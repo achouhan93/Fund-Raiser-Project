@@ -10,9 +10,9 @@ export default {
       .get('http://localhost:8085/cause/getCauseById?causeId=' + causeId)
       .then(response => (this.causes = response.data))
   },
-  getCauseByCategoryId (categoryId) {
+  getCauseByNameAndCategoryId (causeName, categoryId) {
     return axios
-      .get('http://localhost:8085/cause/getCauseByCategory?categoryId=' + categoryId)
+      .get('http://localhost:8085/cause/SearchCause?causeName=' + causeName + '&categoryId=' + categoryId)
       .then(response => (this.causes = response.data))
   }
 }

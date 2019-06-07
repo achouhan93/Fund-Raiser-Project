@@ -17,9 +17,9 @@ public interface CauseService {
 
 	CauseEntity updateCause(CauseEntity editCause, int userId) throws MoneyDonationPoolException;
 
-	ResponseEntity<String> deleteCause(int causeId, int userId) throws MoneyDonationPoolException;
+	ResponseEntity<String> deacticateCause(int causeId, int userId) throws MoneyDonationPoolException;
 
-	List<CauseEntity> SearchCause(String causeName, Integer categoryId);
+	List<CauseEntity> SearchCause(String searchString, Integer categoryId);
 
 	
 

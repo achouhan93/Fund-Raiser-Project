@@ -14,7 +14,7 @@ import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.service.CategoryService;
 
 @RestController
-@RequestMapping("/cause")
+@RequestMapping("/category")
 public class CategoryController {
 	
 	@Autowired
@@ -22,7 +22,7 @@ public class CategoryController {
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	
-	@GetMapping("/getAllCategories")
+	@GetMapping("/")
 	public List<CategoryEntity> getAllCategories() {
 		LOGGER.info("getAllCategories servvice called");
 		return categoryService.getAllCategories();

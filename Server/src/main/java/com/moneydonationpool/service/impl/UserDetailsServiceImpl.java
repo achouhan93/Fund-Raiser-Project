@@ -27,8 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	UserDetailsDao userDetailsDao;
 
 	@Override
-	public UserDetailsModel getUserDetails(int userId,String emailId) {
-		UserDetailsEntity userDetails = userDetailsDao.getUserDetails(userId,emailId);
+	public UserDetailsModel getUserDetails(int userId) {
+		UserDetailsEntity userDetails = userDetailsDao.getUserDetails(userId);
 		List<DonationModel> UserDonations = userDetailsDao.getUserDonations(userId);
 		List<CauseEntity> userCause=null;
 		if (userDetails.getUserType() != "Admin") {
@@ -54,11 +54,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetailsEntity PromoteToAdmin(int userID, int userToPromote) throws MoneyDonationPoolException {
-		UserDetailsEntity adminUserDetailsEntity = userDetailsDao.getUserDetails(userID,"");
+		UserDetailsEntity adminUserDetailsEntity = userDetailsDao.getUserDetails(userID);
 		if (!adminUserDetailsEntity.getUserType().equalsIgnoreCase("Admin")) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
-		UserDetailsEntity userDetailsEntity = userDetailsDao.getUserDetails(userToPromote,"");
+		UserDetailsEntity userDetailsEntity = userDetailsDao.getUserDetails(userToPromote);
 		userDetailsEntity.setUserType("Admin");
 		return userDetailsDao.PromoteToAdmin(userDetailsEntity);
 	}
