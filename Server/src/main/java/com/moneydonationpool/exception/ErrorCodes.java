@@ -17,6 +17,12 @@ public class ErrorCodes {
 	public static final String TARGET_AMOUNT_EXCEEDS = "MDP003 " + HttpStatus.NOT_ACCEPTABLE.value()
 	+ ": selected Donate amount is exceeds the remaining target donation amount";
 	
-	public static final String SOMETHING_WENT_WRONG = "MDP004 " + HttpStatus.NOT_MODIFIED.value()
-	+ ": selected Donate amount is exceeds the remaining target donation amount";
+	public static final String SOMETHING_WENT_WRONG = "MDP004 " + HttpStatus.FORBIDDEN.value()
+	+ ": SOMETHING_WENT_WRONG";
+	
+	public static final String INVALID_SESSION_REQUEST = "MDP005 " + HttpStatus.INTERNAL_SERVER_ERROR.value()
+	+ ": INVALID SESSION REQUEST, Either Access token not provided or expired already";
+	
+	public static final String CAUSE_INACTIVE = "MDP005 " + HttpStatus.METHOD_NOT_ALLOWED.value()
+	+ ": cause is currently inactive";
 }

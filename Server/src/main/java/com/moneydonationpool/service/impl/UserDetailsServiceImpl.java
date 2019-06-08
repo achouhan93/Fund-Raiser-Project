@@ -1,5 +1,6 @@
 package com.moneydonationpool.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
-import com.moneydonationpool.model.DonationModel;
 import com.moneydonationpool.model.UserDetailsModel;
 import com.moneydonationpool.service.UserDetailsService;
 
@@ -28,12 +29,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	UserDetailsDao userDetailsDao;
 
 	@Override
-	public UserDetailsModel getUserDetails(int userId) {
-		UserDetailsEntity userDetails = userDetailsDao.getUserDetails(userId);
-		List<DonationModel> UserDonations = userDetailsDao.getUserDonations(userId);
+	public UserDetailsModel getUserDetails(String accessToken) {
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
+		UserDetailsEntity userDetails = userDetailsDao.getUserDetails(userLoginEntity.getUserId());
+		List<DonationEntity> UserDonations = userDetailsDao.getUserDonations(userLoginEntity.getUserId());
 		List<CauseEntity> userCause=null;
 		if (userDetails.getUserType() != "Admin") {
-			userCause = userDetailsDao.getUserCreatedCause(userId);
+			userCause = userDetailsDao.getUserCreatedCause(userLoginEntity.getUserId());
 		}
 		
 		UserDetailsModel userDetailsModel = new UserDetailsModel();
@@ -44,14 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return userDetailsModel;
 	}
 
-	@Override
-	public UserDetailsEntity registerUser(UserDetailsEntity userDetailsEntity) throws MoneyDonationPoolException {
-		List<String> allEmailIds = userDetailsDao.getExsistingEmails();
-		if (allEmailIds.contains(userDetailsEntity.getEmailId())) {
-			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_ALREADY_EXSIST);
-		}
-		return userDetailsDao.registerUser(userDetailsEntity);
-	}
+	
 
 	@Override
 	public UserDetailsEntity PromoteToAdmin(int userID, int userToPromote) throws MoneyDonationPoolException {
@@ -64,19 +59,45 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return userDetailsDao.PromoteToAdmin(userDetailsEntity);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
-	public int userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException {
-		int userId = userDetailsDao.getUserIdByEmailId(emailId);
+	public String userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException {
+		List<UserDetailsEntity> isUserExsist = userDetailsDao.getUserIdByEmailId(emailId);
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		if(isUserExsist.isEmpty())
+		{
+			UserDetailsEntity userDetailsEntity = new  UserDetailsEntity();
+			userDetailsEntity.setActive(true);
+			userDetailsEntity.setCreationDate(time);
+			userDetailsEntity.setEmailId(emailId);
+			userDetailsEntity.setModifiedDate(time);
+			userDetailsEntity.setUserType("user");
+			userDetailsDao.registerUser(userDetailsEntity);
+		}
+		List<UserDetailsEntity> newUserDetails = userDetailsDao.getUserIdByEmailId(emailId);
 		LoginEntity loginEntity = new LoginEntity();
 		loginEntity.setAccessToken(accessToken);
-		loginEntity.setUserId(userId);
+		loginEntity.setUserId(newUserDetails.get(0).getUserId());
 		
 		String loginStatus = userDetailsDao.userTokenRegistery(loginEntity);
 		if(!loginStatus.equalsIgnoreCase("success"))
 		{
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.SOMETHING_WENT_WRONG);
 		}
-		return userId;
+		return "Success";
+		
+	}
+
+	@Override
+	public String userTokenDeRegistery(String accessToken) throws MoneyDonationPoolException {
+		LoginEntity LoginEntityDetails = userDetailsDao.checkUserSessionDetails(accessToken);
+		if(LoginEntityDetails.equals(null))
+		{
+			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.SOMETHING_WENT_WRONG);
+		
+		}
+		String tokenStatus = userDetailsDao.userTokenDeRegistery(LoginEntityDetails);
+		return tokenStatus;
 		
 	}
 

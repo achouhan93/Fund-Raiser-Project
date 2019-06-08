@@ -11,11 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import com.moneydonationpool.dao.CauseDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.exception.MoneyDonationPoolException;
 
 @Repository(value = "CauseDao")
 public class CauseDaoImpl implements CauseDao {
 	SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CauseEntity> getAllActiveCauses() {
 		Session session = sessionFactory.getCurrentSession();
@@ -23,9 +25,14 @@ public class CauseDaoImpl implements CauseDao {
 	}
 	
 	@Override
-	public CauseEntity getCauseById(int causeId) {
+	public CauseEntity getCauseById(int causeId) throws MoneyDonationPoolException {
 		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
 		List<CauseEntity> selectedCauseEntity = session.createQuery("from CauseEntity c where c.isActive=true and c.causeId="+causeId).list();
+		if(selectedCauseEntity.isEmpty())
+		{
+			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.CAUSE_INACTIVE);
+		}
 		return selectedCauseEntity.get(0);
 	}
 
@@ -48,17 +55,17 @@ public class CauseDaoImpl implements CauseDao {
 	public ResponseEntity<String> deacticateCause(int causeId) {
 		Session session = sessionFactory.getCurrentSession();
 		CauseEntity deleteCause = session.get(CauseEntity.class, causeId);
-		//UnimitraUtility.nullCheckForEntity(deleteEventById, ErrorCodes.EVENT_NOT_PRESENT_FOR_EVENTID);
 
 		deleteCause.setActive(false);
 		session.update(deleteCause);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CauseEntity> searchCause(String searchString, Integer categoryId) {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeTitle like '%"+searchString+"%' or c.categoryId="+categoryId).list();
+		return session.createQuery("from CauseEntity c where c.isActive=true and (lower(c.causeTitle) like lower('%"+searchString+"%') or c.categoryId="+categoryId+")").list();
 	}
 	
 	@Autowired

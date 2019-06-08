@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.moneydonationpool.dao.CauseDao;
 import com.moneydonationpool.dao.DonationDao;
+import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.entity.DonationEntity;
+import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
 import com.moneydonationpool.service.DonationService;
@@ -24,9 +26,14 @@ public class DonationServiceImpl implements DonationService {
 	
 	@Autowired
 	CauseDao causeDao;
+	
+	@Autowired
+	UserDetailsDao userDetailsDao;
 
 	@Override
-	public DonationEntity postDonationDetails(DonationEntity donationDetails) throws MoneyDonationPoolException {
+	public DonationEntity postDonationDetails(String accessToken,DonationEntity donationDetails) throws MoneyDonationPoolException {
+		LoginEntity fetchUserDetails =  userDetailsDao.checkUserSessionDetails(accessToken);
+		donationDetails.setDonatedBy(fetchUserDetails.getUserId());
 		int causeId = donationDetails.getCauseId();
 		DonationEntity donationEntity = null;
 		CauseEntity causeDetails = causeService.getCauseById(causeId);
@@ -46,5 +53,4 @@ public class DonationServiceImpl implements DonationService {
 		causeDao.updateCause(causeDetails);
 		return donationEntity;
 	}
-
 }

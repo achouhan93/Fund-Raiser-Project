@@ -6,12 +6,12 @@ import com.moneydonationpool.model.UserDetailsModel;
 
 public interface UserDetailsService {
 
-	UserDetailsModel getUserDetails(int userId);
-
-	UserDetailsEntity registerUser(UserDetailsEntity userDetailsEntity) throws MoneyDonationPoolException;
+	UserDetailsModel getUserDetails(String accessToken);
 
 	UserDetailsEntity PromoteToAdmin(int userID, int userToPromote) throws MoneyDonationPoolException;
 
-	int userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException;
+	String userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException;
+
+	String userTokenDeRegistery(String accessToken) throws MoneyDonationPoolException;
 
 }

@@ -25,15 +25,15 @@ public class DonationEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "donation_id")
-	private int donationId;
+	private Integer donationId;
 	
-	@Column(name = "donated_by")
-	private int donatedBy;
+	@Column(name = "donated_by",nullable = false)
+	private Integer donatedBy;
 	
-	@Column(name = "cause_id")
-	private int causeId;
+	@Column(name = "cause_id",nullable = false)
+	private Integer causeId;
 	
-	@Column(name = "amount_donated")
-	private int amountDonated;
+	@Column(name = "amount_donated",nullable = false)
+	private Integer amountDonated;
 
 }

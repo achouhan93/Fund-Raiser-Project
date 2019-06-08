@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moneydonationpool.entity.CategoryEntity;
-import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.service.CategoryService;
-@CrossOrigin
+
 @RestController
+@CrossOrigin
 @RequestMapping("/category")
 public class CategoryController {
 	

@@ -14,6 +14,7 @@ import com.moneydonationpool.entity.CategoryEntity;
 public class CategoryDaoImpl implements CategoryDao {
 	SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CategoryEntity> getAllCategories() {
 		Session session = sessionFactory.getCurrentSession();

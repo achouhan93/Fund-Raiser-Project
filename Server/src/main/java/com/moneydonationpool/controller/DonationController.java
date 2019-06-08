@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.DonationService;
-@CrossOrigin
+
 @RestController
+@CrossOrigin
 @RequestMapping("/donation")
 public class DonationController {
 	
@@ -23,9 +25,9 @@ public class DonationController {
 	DonationService donationService;
 	
 	@PostMapping("/")
-	public DonationEntity postDonationDetails(@RequestBody DonationEntity donationDetails) throws MoneyDonationPoolException {
+	public DonationEntity postDonationDetails(@RequestHeader String accessToken,@RequestBody DonationEntity donationDetails) throws MoneyDonationPoolException {
 		LOGGER.info("postDonationDetails service called");
-		return donationService.postDonationDetails(donationDetails);
+		return donationService.postDonationDetails(accessToken,donationDetails);
 	}
 
 }

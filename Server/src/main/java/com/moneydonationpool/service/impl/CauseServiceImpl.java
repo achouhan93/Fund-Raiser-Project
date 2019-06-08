@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.moneydonationpool.dao.CauseDao;
 import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
@@ -33,30 +34,34 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public CauseEntity getCauseById(int causeId) {
+	public CauseEntity getCauseById(int causeId) throws MoneyDonationPoolException {
 		return causeDao.getCauseById(causeId);
 	}
 
 	@Override
-	public CauseEntity postCause(CauseEntity postCauseDetails, int userId) throws MoneyDonationPoolException {
+	public CauseEntity postCause(CauseEntity postCauseDetails, String accessToken) throws MoneyDonationPoolException {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
-		
-		UserDetailsEntity userDetailsEntity =  userDetailsDao.getUserDetails(userId);
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
+		if(userLoginEntity.equals(null))
+		{
+			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.INVALID_SESSION_REQUEST);
+		}
+		UserDetailsEntity userDetailsEntity =  userDetailsDao.getUserDetails(userLoginEntity.getUserId());
 		
 		if (!userDetailsEntity.getUserType().equalsIgnoreCase("Admin")) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
 		postCauseDetails.setCreationDate(time);
-		postCauseDetails.setCreatedBy(userId);
+		postCauseDetails.setCreatedBy(userLoginEntity.getUserId());
 		return causeDao.postCause(postCauseDetails);
 	}
 
 	@Override
-	public CauseEntity updateCause(CauseEntity updateCauseDetails, int userId) throws MoneyDonationPoolException {
-
+	public CauseEntity updateCause(CauseEntity updateCauseDetails, String accessToken) throws MoneyDonationPoolException {
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
 		CauseEntity originalCauseDetails = causeDao.getCauseById(updateCauseDetails.getCauseId());
 
-		if (originalCauseDetails.getCreatedBy() != userId) {
+		if (originalCauseDetails.getCreatedBy() != userLoginEntity.getUserId()) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
 			originalCauseDetails.setCategoryId(updateCauseDetails.getCategoryId());

@@ -1,6 +1,6 @@
 package com.moneydonationpool.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,43 +27,25 @@ public class UserDetailsEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int userId;
+	private Integer userId;
 
-	@Column(name = "first_name")
-	private String firstName;
-	
-	@Column(name = "last_name")
-	private String lastName;
-	
-	@Column(name = "dob")
-	private Date dob;
-	
-	@Column(name = "email_id")
+	@Column(name = "email_id",nullable = false)
 	private String emailId;
-	
-	@Column(name = "address")
-	private String address;
 	
 	@Column(name = "ph_no")
 	private String phNo;
 	
 	@Column(name = "creation_date")
-	private Date creationDate;
+	private Timestamp creationDate;
 	
 	@Column(name = "modified_date")
-	private Date modifiedDate;
+	private Timestamp modifiedDate;
 	
-	@Column(name = "is_active")
+	@Column(name = "is_active",nullable = false)
 	private boolean isActive;
 	
-	@Column(name = "user_type")
+	@Column(name = "user_type",nullable = false)
 	private String userType;
-	
-	@Column(name = "image_name")
-	private String imageName;
-	
-	@Column(name = "gender")
-	private String gender;
 	
 
 }

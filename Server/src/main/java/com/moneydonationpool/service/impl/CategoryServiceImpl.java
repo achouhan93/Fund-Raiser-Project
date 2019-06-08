@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.moneydonationpool.dao.CategoryDao;
 import com.moneydonationpool.entity.CategoryEntity;
-import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.service.CategoryService;
 
 @Service

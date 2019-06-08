@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.exception.MoneyDonationPoolException;
 
 public interface CauseDao {
 
 	List<CauseEntity> getAllActiveCauses();
 
-	CauseEntity getCauseById(int causeId);
+	CauseEntity getCauseById(int causeId) throws MoneyDonationPoolException;
 
 	CauseEntity postCause(CauseEntity postCauseDetails);
 	

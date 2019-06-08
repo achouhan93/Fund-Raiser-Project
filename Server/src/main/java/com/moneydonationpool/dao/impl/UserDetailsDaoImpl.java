@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.moneydonationpool.dao.UserDetailsDao;
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
-import com.moneydonationpool.model.DonationModel;
 
 @Repository
 public class UserDetailsDaoImpl implements UserDetailsDao {
@@ -32,11 +32,11 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	}
 
 	@Override
-	public int getUserIdByEmailId(String emailId) {
+	public List<UserDetailsEntity> getUserIdByEmailId(String emailId) {
 		Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<UserDetailsEntity> userDetailsEntity = session.createQuery("from UserDetailsEntity u where u.isActive=true and u.emailId='" + emailId+"'").list();
-		 return userDetailsEntity.get(0).getUserId();
+		 return userDetailsEntity;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -61,11 +61,11 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	}
 
 	@Override
-	public List<DonationModel> getUserDonations(int userId) {
+	public List<DonationEntity> getUserDonations(int userId) {
 		Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<DonationModel> userDonation = session.createQuery(
-				"select c.causeTitle,d.amountDonated from DonationEntity d join CauseEntity c on c.causeId = d.causeId where d.donatedBy =1")
+		List<DonationEntity> userDonation = session.createQuery(
+				"from DonationEntity d join CauseEntity c on c.causeId = d.causeId where d.donatedBy =1")
 				.list();
 		return userDonation;
 	}
@@ -83,6 +83,21 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(loginEntity);
 		return "Success";
+	}
+
+	@Override
+	public String userTokenDeRegistery(LoginEntity loginEntity) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(loginEntity);
+		return "Success";
+	}
+	
+	@Override
+	public LoginEntity checkUserSessionDetails(String accessToken) {
+		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<LoginEntity> loginEntity = session.createQuery("from LoginEntity l where l.accessToken ='"+accessToken+"'").list();
+		return loginEntity.get(0);
 	}
 
 

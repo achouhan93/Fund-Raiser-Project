@@ -25,9 +25,12 @@ public class CategoryEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "category_id")
-	private int categoryId;
+	private Integer categoryId;
 	
-	@Column(name = "category_name")
+	@Column(name = "category_name",length=200)
 	private String categoryName;
+	
+	@Column(name = "image_name",length=100)
+	private String imageName;
 
 }

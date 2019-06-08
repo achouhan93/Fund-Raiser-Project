@@ -3,9 +3,9 @@ package com.moneydonationpool.dao;
 import java.util.List;
 
 import com.moneydonationpool.entity.CauseEntity;
+import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.entity.LoginEntity;
 import com.moneydonationpool.entity.UserDetailsEntity;
-import com.moneydonationpool.model.DonationModel;
 
 public interface UserDetailsDao {
 
@@ -17,14 +17,18 @@ public interface UserDetailsDao {
 
 	UserDetailsEntity PromoteToAdmin(UserDetailsEntity userDetailsEntity);
 
-	List<DonationModel> getUserDonations(int userId);
+	List<DonationEntity> getUserDonations(int userId);
 
 	List<CauseEntity> getUserCreatedCause(int userId);
 
-	public int getUserIdByEmailId(String emailId);
+	public List<UserDetailsEntity> getUserIdByEmailId(String emailId);
 
 
 	String userTokenRegistery(LoginEntity loginEntity);
+
+	String userTokenDeRegistery(LoginEntity loginEntity);
+	
+	public LoginEntity checkUserSessionDetails(String accessToken);
 
 
 }
