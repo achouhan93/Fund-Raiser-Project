@@ -6,6 +6,7 @@ import Home from '@/components/Home'
 import CreateCause from '@/components/CreateCause'
 import CauseDetails from '@/components/CauseDetails'
 import UserHome from '@/components/UserHome'
+import testLogin from '@/components/testLogin'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/user_home/',
       name: 'user_home',
       component: UserHome
+    },
+    {
+      path: '/testLogin',
+      name: 'testLogin',
+      component: testLogin
     }
   ]
 })
