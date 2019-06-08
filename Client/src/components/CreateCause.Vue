@@ -144,7 +144,7 @@ export default {
       var causedata = {
         'categoryId': 1,
         'causeTargetAmt': Number(this.cause_target_amt),
-        'creationDate': today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+        'creationDate': today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
         'causeExpirationDate': this.cause_expiration_date,
         'description': this.description,
         'collectedAmt': 0,
