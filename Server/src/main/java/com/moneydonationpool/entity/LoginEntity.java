@@ -22,10 +22,11 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class LoginEntity {
 	
-	@Id
+	
 	@Column(name = "user_id")
 	private int userId;
 	
+	@Id
 	@Column(name = "access_token")
 	private String accessToken;
 

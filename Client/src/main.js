@@ -12,10 +12,12 @@ import Amplify, * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue'
 import awsExports from './aws-exports'
 import store from './store.js'
+import 'vue-navigation-bar/dist/vue-navigation-bar.css'
+import VueNavigationBar from 'vue-navigation-bar'
 
 Amplify.configure(awsExports)
 Vue.use(AmplifyPlugin, AmplifyModules)
-
+Vue.component('vue-navigation-bar', VueNavigationBar)
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)

@@ -14,7 +14,6 @@
 import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
 import axios from 'axios'
-import Stores from '@/store.js'
 
 export default {
   name: 'testLogin',
@@ -39,9 +38,8 @@ export default {
       try {
         const user = await Auth.currentAuthenticatedUser()
         console.log(user)
-        /* this.signedIn = true
-        this.$store.state.signedIn = true */
-        Stores.state.signedIn = true
+        this.signedIn = true
+        this.$store.state.signedIn = true
         const userEmail = user.attributes.email
         console.log(userEmail)
         const jwt = user
@@ -57,15 +55,16 @@ export default {
           }
         }
         axios.get(`http://localhost:8085/user/login`, config
-        )
-          .then(response => {
-          })
+        ).then(this.navigateTo({ name: 'home' }))
           .catch(e => {
             this.errors.push(e)
           })
       } catch (err) {
         this.signedIn = false
       }
+    },
+    navigateTo (route) {
+      this.$router.push(route)
     }
   }
 
