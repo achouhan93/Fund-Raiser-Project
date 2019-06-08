@@ -100,17 +100,11 @@
 <script>
 import axios from 'axios'
 export default {
+  name: 'UpdateCause',
   data () {
     return {
-      cause_title: '',
-      category: ['Natural Disaster', 'Personal', 'Education'],
-      description: '',
-      cause_target_amt: '',
-      cause_expiration_date: null,
-      account_number: '',
-      code: '',
-      image: null,
-      status: ' ',
+      cause: {},
+      causeId: this.$route.params.causeId,
       isDisabled: true,
       rules: {
         required: value => !!value || 'Required.',
@@ -119,6 +113,10 @@ export default {
       }
     }
   },
+  async mounted () {
+    this.cause = await GetCauseService.getCauseById(this.causeId)
+  },
+
   computed: {
     formIsValid () {
       return 
@@ -133,7 +131,7 @@ export default {
     navigateTo (route) {
       this.$router.push(route)
     },
-    async createCause () {
+    async updateCause () {
       if (!this.formIsValid) {
         return
       }
@@ -143,21 +141,25 @@ export default {
       
       var causedata = {
         'categoryId': 1,
-        'causeTargetAmt': Number(this.cause_target_amt),
-        'creationDate': this.cause_expiration_date,
-        'causeExpirationDate': this.cause_expiration_date,
+        'causeTargetAmt': if(Number(this.cause_target_amt) != this.cause.cause_target_amt) {
+          Number(this.cause_target_amt)
+        },
+        'creationDate': this.cause.cause_creation_date,
+        'causeExpirationDate': if(this.cause_expiration_date != this.cause.cause_expiration_date){
+          this.cause_expiration_date
+        },
         'description': this.description,
-        'collectedAmt': 0,
-        'causeTitle': this.cause_title,
-        'createdBy': 8,
-        'bankAccountNumber': this.account_number,
-        'bic': this.code,
+        'collectedAmt': this.cause.collectedAmt,
+        'causeTitle': this.cause.cause_title,
+        'createdBy': this.cause.user_id,
+        'bankAccountNumber': this.cause.account_number,
+        'bic': this.cause.code,
         'imageName': '1.png',
         'active': true,
         image: this.image
       }
 
-      await axios.post(`http://localhost:8085/cause/postCause?userId=8`,
+      await axios.put(`http://localhost:8085/cause/`+ this.causeId,
         causedata
       )
         .then(response => (this.status = response.data))
@@ -179,7 +181,15 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
       this.image = files[0]
-    }
+    },
+
+  
+
+
+      
+  
+}
+</script>
 
   }
 }
