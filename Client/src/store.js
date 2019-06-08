@@ -7,7 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    signedIn: true
+    signedIn: true,
+    causeId: 0,
+    causeData: []
 
   },
   mutations: {

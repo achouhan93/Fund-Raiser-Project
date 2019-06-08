@@ -7,6 +7,8 @@ import CreateCause from '@/components/CreateCause'
 import CauseDetails from '@/components/CauseDetails'
 import UserHome from '@/components/UserHome'
 import testLogin from '@/components/testLogin'
+import Dashboard from '@/components/Dashboard'
+import UpdateCause from '@/components/UpdateCause'
 
 Vue.use(Router)
 
@@ -46,6 +48,16 @@ export default new Router({
       path: '/testLogin',
       name: 'testLogin',
       component: testLogin
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/updateCause',
+      name: 'updateCause',
+      component: UpdateCause
     }
   ]
 })

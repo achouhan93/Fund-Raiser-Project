@@ -4,7 +4,7 @@
           <span @click="navigateTo({name: 'home' })" class="home"> Fund Raiser
           </span>
     </v-toolbar-title>
-    <v-toolbar-items>
+    <v-toolbar-items v-if = "this.$store.state.signedIn" >
       <v-btn flat dark @click="navigateTo({name: 'createcause' })"> Create Cause </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
@@ -55,7 +55,7 @@ export default {
     },
     performAction (titleSelected) {
       if (titleSelected === 'Dashboard') {
-        console.log(titleSelected)
+        this.navigateTo({ name: 'dashboard' })
       } else if (titleSelected === 'Sign out') {
         Auth.signOut()
           .then(data => {

@@ -28,16 +28,6 @@
             v-model="description"
             :rules="[rules.required, rules.minLength]"
             required></v-text-field>
-          <br>
-          <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
-          <input
-            type="file"
-            style="display: none"
-            ref="fileInput"
-            accept="image/*"
-            @change="onFilePicked">
-          <img v-bind:src="imagePreview" v-show="showPreview"/>
-          <br>
           <v-text-field
             name="in Euros"
             label="Targeted Amount"
@@ -107,12 +97,11 @@ export default {
       cause_expiration_date: null,
       account_number: '',
       code: '',
-      image: null,
       status: ' ',
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Minimum 8 characters',
-        minLength: v => v.length >= 100 || 'Minimum 100 Words'
+        minLength: v => v.length >= 5 || 'Minimum 100 Words'
       }
     }
   },
@@ -124,7 +113,6 @@ export default {
         this.cause_target_amt !== '' &&
         this.cause_expiration_date !== '' &&
         this.account_number !== '' &&
-        this.imageUrl !== '' &&
         this.code !== ''
     }
   },
@@ -134,9 +122,6 @@ export default {
     },
     async createCause () {
       if (!this.formIsValid) {
-        return
-      }
-      if (!this.image) {
         return
       }
       var today = new Date()
@@ -157,30 +142,13 @@ export default {
         image: this.image
       }
 
-      await axios.post(`http://localhost:8085/cause/postCause?userId=8`,
+      await axios.post(`http://localhost:8085/cause/20`,
         causedata
       )
         .then(response => (this.status = response.data))
 
       this.navigateTo({ name: 'home' })
-    },
-    onPickFile () {
-      this.$refs.fileInput.click()
-    },
-    onFilePicked (event) {
-      const files = event.target.files
-      let filename = files[0].name
-      if (filename.lastIndexOf('.') <= 0) {
-        return alert('Please add a valid file!')
-      }
-      const fileReader = new FileReader()
-      fileReader.addEventListener('load', () => {
-        this.imageUrl = fileReader.result
-      })
-      fileReader.readAsDataURL(files[0])
-      this.image = files[0]
     }
-
   }
 }
 </script>

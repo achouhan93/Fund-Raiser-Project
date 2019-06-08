@@ -6,7 +6,6 @@
     <div v-if="this.$store.state.signedIn">
     <amplify-sign-out></amplify-sign-out>
     </div>
-    {{this.$store.state.signedIn}}
   </div>
 </template>
 
