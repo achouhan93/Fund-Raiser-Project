@@ -9,10 +9,7 @@
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-            <v-btn flat dark @click="navigateTo({name: 'register' })">
-                Register
-            </v-btn>
-            <v-btn flat dark @click="navigateTo({name: 'login' })">
+            <v-btn flat dark @click="navigateTo({name: 'testLogin' })">
                 Login
             </v-btn>
         </v-toolbar-items>

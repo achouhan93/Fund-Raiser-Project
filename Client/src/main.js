@@ -11,6 +11,8 @@ import VeeValidate from 'vee-validate'
 import Amplify, * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue'
 import awsExports from './aws-exports'
+import store from './store.js'
+
 Amplify.configure(awsExports)
 Vue.use(AmplifyPlugin, AmplifyModules)
 
@@ -23,6 +25,7 @@ Vue.use(VeeValidate)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

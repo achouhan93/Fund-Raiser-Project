@@ -23,8 +23,8 @@
           {{cause.collectedAmt}}
   </div>
           <v-spacer></v-spacer>
-          <v-btn class="cyan btn-update">Update</v-btn>
-          <v-btn class="cyan btn-donate">Donate</v-btn>
+            <v-btn class="cyan btn-update" :disabled= !isUserSignedIn >Update</v-btn>
+            <v-btn class="cyan btn-donate" :disabled= !isUserSignedIn>Donate</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -41,7 +41,8 @@ export default {
     return {
       // cause_title: this.$route.params.causeTitle
       cause: {},
-      causeId: this.$route.params.causeId
+      causeId: this.$route.params.causeId,
+      isUserSignedIn: this.$store.state.signedIn
     }
   },
   async mounted () {

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="!signedIn">
+    <div v-if="!this.$store.state.signedIn">
     <amplify-authenticator></amplify-authenticator>
     </div>
-    <div v-if="signedIn">
+    <div v-if="this.$store.state.signedIn">
     <amplify-sign-out></amplify-sign-out>
     </div>
-    {{signedIn}}
+    {{this.$store.state.signedIn}}
   </div>
 </template>
 
@@ -14,12 +14,13 @@
 import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
 import axios from 'axios'
+import Stores from '@/store.js'
 
 export default {
   name: 'testLogin',
   data () {
     return {
-      signedIn: false
+      signedIn: this.$store.state.signedIn
     }
   },
   created () {
@@ -29,6 +30,7 @@ export default {
         this.findUser()
       } else {
         this.signedIn = false
+        this.$store.state.signedIn = false
       }
     })
   },
@@ -37,7 +39,9 @@ export default {
       try {
         const user = await Auth.currentAuthenticatedUser()
         console.log(user)
-        this.signedIn = true
+        /* this.signedIn = true
+        this.$store.state.signedIn = true */
+        Stores.state.signedIn = true
         const userEmail = user.attributes.email
         console.log(userEmail)
         const jwt = user
