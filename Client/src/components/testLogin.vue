@@ -47,17 +47,13 @@ export default {
           .getSignInUserSession()
           .getIdToken()
           .getJwtToken()
-        const config = {
-          headers: {
-            'accessToken': jwt
-          },
-          params: {
-            emailId: userEmail
-          }
-        }
-        axios.get(`http://localhost:8085/user/login`, config
-        )
-          .then(this.navigateTo({ name: 'home' }))
+        console.log(jwt)
+        axios({
+          method: 'post',
+          url: 'http://localhost:8085/user/login',
+          params: {'emailId': userEmail},
+          headers: {'accessToken': jwt}
+        }).then(this.navigateTo({ name: 'home' }))
           .catch(e => {
             this.errors.push(e)
           })

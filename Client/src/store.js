@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    signedIn: true,
+    signedIn: false,
     causeId: 0,
     causeData: []
 
