@@ -49,8 +49,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 
 	@Override
-	public UserDetailsEntity PromoteToAdmin(int userID, int userToPromote) throws MoneyDonationPoolException {
-		UserDetailsEntity adminUserDetailsEntity = userDetailsDao.getUserDetails(userID);
+	public UserDetailsEntity PromoteToAdmin(String authorization, int userToPromote) throws MoneyDonationPoolException {
+		LoginEntity userSessionDetails = userDetailsDao.checkUserSessionDetails(authorization);
+		UserDetailsEntity adminUserDetailsEntity = userDetailsDao.getUserDetails(userSessionDetails.getUserId());
 		if (!adminUserDetailsEntity.getUserType().equalsIgnoreCase("Admin")) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
@@ -61,7 +62,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@SuppressWarnings("unused")
 	@Override
-	public String userTokenRegistery(String accessToken, String emailId) throws MoneyDonationPoolException {
+	public String userTokenRegistery(String authorization, String emailId) throws MoneyDonationPoolException {
 		List<UserDetailsEntity> isUserExsist = userDetailsDao.getUserIdByEmailId(emailId);
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		if(isUserExsist.isEmpty())
@@ -76,7 +77,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		List<UserDetailsEntity> newUserDetails = userDetailsDao.getUserIdByEmailId(emailId);
 		LoginEntity loginEntity = new LoginEntity();
-		loginEntity.setAccessToken(accessToken);
+		loginEntity.setAccessToken(authorization);
 		loginEntity.setUserId(newUserDetails.get(0).getUserId());
 		
 		String loginStatus = userDetailsDao.userTokenRegistery(loginEntity);
@@ -89,8 +90,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Override
-	public String userTokenDeRegistery(String accessToken) throws MoneyDonationPoolException {
-		LoginEntity LoginEntityDetails = userDetailsDao.checkUserSessionDetails(accessToken);
+	public String userTokenDeRegistery(String authorization) throws MoneyDonationPoolException {
+		LoginEntity LoginEntityDetails = userDetailsDao.checkUserSessionDetails(authorization);
 		if(LoginEntityDetails.equals(null))
 		{
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.SOMETHING_WENT_WRONG);

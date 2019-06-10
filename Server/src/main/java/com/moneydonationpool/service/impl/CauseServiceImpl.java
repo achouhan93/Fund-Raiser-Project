@@ -69,7 +69,7 @@ public class CauseServiceImpl implements CauseService {
 			originalCauseDetails.setCauseTargetAmt(updateCauseDetails.getCauseTargetAmt());
 			originalCauseDetails.setCollectedAmt(updateCauseDetails.getCollectedAmt());
 			originalCauseDetails.setDescription(updateCauseDetails.getDescription());
-			originalCauseDetails.setActive(updateCauseDetails.isActive());
+			originalCauseDetails.setIsActive(updateCauseDetails.getIsActive());
 			originalCauseDetails.setCauseTitle(updateCauseDetails.getCauseTitle());
 
 		causeDao.updateCause(originalCauseDetails);

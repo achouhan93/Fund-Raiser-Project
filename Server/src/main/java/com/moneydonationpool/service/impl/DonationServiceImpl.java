@@ -41,7 +41,7 @@ public class DonationServiceImpl implements DonationService {
 		{
 			donationEntity = donationDao.postDonationDetails(donationDetails);
 			causeDetails.setCollectedAmt(donationDetails.getAmountDonated() + causeDetails.getCollectedAmt());
-			causeDetails.setActive(false);
+			causeDetails.setIsActive(false);
 			causeDao.updateCause(causeDetails);
 			return donationEntity;
 		}

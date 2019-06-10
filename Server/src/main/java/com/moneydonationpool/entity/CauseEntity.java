@@ -28,44 +28,41 @@ public class CauseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cause_id")
-	private int causeId;
+	private Integer causeId;
 	
-	@Column(name = "category_id")
-	private int categoryId;
+	@Column(name = "category_id",nullable = false)
+	private Integer categoryId;
 
-	@Column(name = "cause_target_amt")
-	private int causeTargetAmt;
+	@Column(name = "cause_target_amt",nullable = false)
+	private Integer causeTargetAmt;
 	
-	@Column(name = "creation_date")
+	@Column(name = "creation_date",nullable = false)
 	private Timestamp creationDate;
 	
-	@Column(name = "is_active")
-	private boolean isActive;
+	@Column(name = "is_active",nullable = false)
+	private Boolean isActive;
 	
-	@Column(name = "cause_expiration_date")
+	@Column(name = "cause_expiration_date",nullable = false)
 	private Date causeExpirationDate;
 	
-	@Column(name = "description")
+	@Column(name = "description",length=5000)
 	private String description;
 	
-	@Column(name = "collected_amt")
-	private int collectedAmt;
+	@Column(name = "collected_amt",nullable = false)
+	private Integer collectedAmt;
 	
-	@Column(name = "cause_title")
+	@Column(name = "cause_title",nullable = false,length=500)
 	private String causeTitle;
 	
 	@Column(name = "created_by")
-	private int createdBy;
+	private Integer createdBy;
 	
-	@Column(name = "cause_for")
-	private String causeFor;
-	
-	@Column(name = "accountNumber")
+	@Column(name = "accountNumber",nullable = false,length=20)
 	private String bankAccountNumber;
 	
-	@Column(name = "BIC")
+	@Column(name = "BIC",nullable = false,length=20)
 	private String bic;
 
-	@Column(name = "image_name")
+	@Column(name = "image_name",nullable = false)
 	private String imageName;
 }
