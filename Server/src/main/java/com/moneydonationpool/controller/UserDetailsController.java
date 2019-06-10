@@ -17,7 +17,7 @@ import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.model.UserDetailsModel;
 import com.moneydonationpool.service.UserDetailsService;
-@CrossOrigin
+
 @RestController
 @CrossOrigin
 @RequestMapping("/user")
