@@ -9,7 +9,8 @@ export default new Vuex.Store({
     user: null,
     signedIn: false,
     causeId: 0,
-    causeData: []
+    causeData: [],
+    API_URL: 'http://localhost:8085/'
 
   },
   mutations: {
