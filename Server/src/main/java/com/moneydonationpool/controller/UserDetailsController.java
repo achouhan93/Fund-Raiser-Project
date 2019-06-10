@@ -17,7 +17,7 @@ import com.moneydonationpool.entity.UserDetailsEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.model.UserDetailsModel;
 import com.moneydonationpool.service.UserDetailsService;
-@CrossOrigin
+
 @RestController
 @CrossOrigin
 @RequestMapping("/user")
@@ -30,9 +30,9 @@ public class UserDetailsController {
 
 	
 	@GetMapping("/")
-	public UserDetailsModel getUserDetails(@RequestHeader String accessToken) {
+	public UserDetailsModel getUserDetails(@RequestHeader String authorization) {
 		LOGGER.info("getAllActiveCauses service called");
-		return userDetailsService.getUserDetails(accessToken);
+		return userDetailsService.getUserDetails(authorization);
 	}
 
 	

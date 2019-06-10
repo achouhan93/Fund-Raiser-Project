@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.moneydonationpool.entity.CategoryEntity;
 import com.moneydonationpool.service.CategoryService;
-@CrossOrigin
+
 @RestController
 @CrossOrigin
 @RequestMapping("/category")

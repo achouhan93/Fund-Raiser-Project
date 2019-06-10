@@ -6,7 +6,7 @@ import com.moneydonationpool.model.UserDetailsModel;
 
 public interface UserDetailsService {
 
-	UserDetailsModel getUserDetails(String accessToken);
+	UserDetailsModel getUserDetails(String authorization);
 
 	UserDetailsEntity PromoteToAdmin(int userID, int userToPromote) throws MoneyDonationPoolException;
 

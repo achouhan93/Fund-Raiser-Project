@@ -32,9 +32,6 @@ public class UserDetailsEntity {
 	@Column(name = "email_id",nullable = false)
 	private String emailId;
 	
-	@Column(name = "ph_no")
-	private String phNo;
-	
 	@Column(name = "creation_date")
 	private Timestamp creationDate;
 	

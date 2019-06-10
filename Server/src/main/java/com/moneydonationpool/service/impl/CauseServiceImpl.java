@@ -39,9 +39,9 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public CauseEntity postCause(CauseEntity postCauseDetails, String accessToken) throws MoneyDonationPoolException {
+	public CauseEntity postCause(CauseEntity postCauseDetails, String authorization) throws MoneyDonationPoolException {
 		Timestamp time = new Timestamp(System.currentTimeMillis());
-		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(authorization);
 		if(userLoginEntity.equals(null))
 		{
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.INVALID_SESSION_REQUEST);
@@ -57,8 +57,8 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public CauseEntity updateCause(CauseEntity updateCauseDetails, String accessToken) throws MoneyDonationPoolException {
-		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
+	public CauseEntity updateCause(CauseEntity updateCauseDetails, String authorization) throws MoneyDonationPoolException {
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(authorization);
 		CauseEntity originalCauseDetails = causeDao.getCauseById(updateCauseDetails.getCauseId());
 
 		if (originalCauseDetails.getCreatedBy() != userLoginEntity.getUserId()) {
@@ -77,9 +77,10 @@ public class CauseServiceImpl implements CauseService {
 	}
 
 	@Override
-	public ResponseEntity<String> deacticateCause(int causeId, int userId) throws MoneyDonationPoolException {
+	public ResponseEntity<String> deacticateCause(int causeId, String authorization) throws MoneyDonationPoolException {
 		CauseEntity causeDetails = causeDao.getCauseById(causeId);
-		if (causeDetails.getCreatedBy() != userId) {
+		LoginEntity userLoginSeesionDetails = userDetailsDao.checkUserSessionDetails(authorization);
+		if (causeDetails.getCreatedBy() != userLoginSeesionDetails.getUserId()) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
 		}
 		return causeDao.deacticateCause(causeId);

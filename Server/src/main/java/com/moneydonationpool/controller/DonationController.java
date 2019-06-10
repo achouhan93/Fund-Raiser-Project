@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.DonationService;
-@CrossOrigin
+
 @RestController
 @CrossOrigin
 @RequestMapping("/donation")
@@ -25,9 +25,9 @@ public class DonationController {
 	DonationService donationService;
 	
 	@PostMapping("/")
-	public DonationEntity postDonationDetails(@RequestHeader String accessToken,@RequestBody DonationEntity donationDetails) throws MoneyDonationPoolException {
+	public DonationEntity postDonationDetails(@RequestHeader String authorization,@RequestBody DonationEntity donationDetails) throws MoneyDonationPoolException {
 		LOGGER.info("postDonationDetails service called");
-		return donationService.postDonationDetails(accessToken,donationDetails);
+		return donationService.postDonationDetails(authorization,donationDetails);
 	}
 
 }

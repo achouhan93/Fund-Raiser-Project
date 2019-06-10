@@ -5,5 +5,5 @@ import com.moneydonationpool.exception.MoneyDonationPoolException;
 
 public interface DonationService {
 
-	public DonationEntity postDonationDetails(String accessToken, DonationEntity donationDetails) throws MoneyDonationPoolException;
+	public DonationEntity postDonationDetails(String authorization, DonationEntity donationDetails) throws MoneyDonationPoolException;
 }

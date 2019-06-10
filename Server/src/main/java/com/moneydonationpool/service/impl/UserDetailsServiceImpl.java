@@ -29,8 +29,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	UserDetailsDao userDetailsDao;
 
 	@Override
-	public UserDetailsModel getUserDetails(String accessToken) {
-		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(accessToken);
+	public UserDetailsModel getUserDetails(String authorization) {
+		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(authorization);
 		UserDetailsEntity userDetails = userDetailsDao.getUserDetails(userLoginEntity.getUserId());
 		List<DonationEntity> UserDonations = userDetailsDao.getUserDonations(userLoginEntity.getUserId());
 		List<CauseEntity> userCause=null;

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
-@CrossOrigin
+
 @RestController
 @CrossOrigin
 @RequestMapping("/cause")
@@ -51,19 +51,19 @@ public class CauseController {
 	}
 	
 	@PostMapping("/")
-	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@RequestHeader String accessToken) throws MoneyDonationPoolException {
+	public CauseEntity postCause(@RequestBody CauseEntity postCauseDetails,@RequestHeader String authorization) throws MoneyDonationPoolException {
 		LOGGER.info("postCause");
-		return causeService.postCause(postCauseDetails,accessToken);
+		return causeService.postCause(postCauseDetails,authorization);
 	}
 	
 	@PutMapping("/")
-	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @RequestHeader String accessToken) throws MoneyDonationPoolException {
-		return causeService.updateCause(updateCause,accessToken);
+	public CauseEntity updateCause(@RequestBody CauseEntity updateCause, @RequestHeader String authorization) throws MoneyDonationPoolException {
+		return causeService.updateCause(updateCause,authorization);
 	}	
 
 	@DeleteMapping(value = "/", params = { "causeId", "userId" })
-	public ResponseEntity<String> deacticateCause(@RequestParam int causeId, @RequestParam int userId) throws MoneyDonationPoolException {
-		return causeService.deacticateCause(causeId, userId);
+	public ResponseEntity<String> deacticateCause(@RequestParam int causeId, @RequestHeader String authorization) throws MoneyDonationPoolException {
+		return causeService.deacticateCause(causeId, authorization);
 
 	}
 

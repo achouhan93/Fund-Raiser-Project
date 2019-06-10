@@ -13,11 +13,11 @@ public interface CauseService {
 
 	CauseEntity getCauseById(int causeId) throws MoneyDonationPoolException;
 
-	CauseEntity postCause(CauseEntity postCauseDetails, String accessToken) throws MoneyDonationPoolException;
+	CauseEntity postCause(CauseEntity postCauseDetails, String authorization) throws MoneyDonationPoolException;
 
-	CauseEntity updateCause(CauseEntity editCause, String accessToken) throws MoneyDonationPoolException;
+	CauseEntity updateCause(CauseEntity editCause, String authorization) throws MoneyDonationPoolException;
 
-	ResponseEntity<String> deacticateCause(int causeId, int userId) throws MoneyDonationPoolException;
+	ResponseEntity<String> deacticateCause(int causeId, String authorization) throws MoneyDonationPoolException;
 
 	List<CauseEntity> SearchCause(String searchString, Integer categoryId);
 

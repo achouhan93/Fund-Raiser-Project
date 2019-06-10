@@ -28,36 +28,36 @@ public class CauseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cause_id")
-	private Integer causeId;
+	private int causeId;
 	
-	@Column(name = "category_id",nullable = false)
-	private Integer categoryId;
+	@Column(name = "category_id")
+	private int categoryId;
 
-	@Column(name = "cause_target_amt",nullable = false)
-	private Integer causeTargetAmt;
+	@Column(name = "cause_target_amt")
+	private int causeTargetAmt;
 	
 	@Column(name = "creation_date")
 	private Timestamp creationDate;
 	
-	@Column(name = "is_active",nullable = false)
+	@Column(name = "is_active")
 	private boolean isActive;
 	
-	@Column(name = "cause_expiration_date",nullable = false)
+	@Column(name = "cause_expiration_date")
 	private Date causeExpirationDate;
 	
-	@Column(name = "description",length = 5000)
+	@Column(name = "description")
 	private String description;
 	
 	@Column(name = "collected_amt")
-	private Integer collectedAmt;
+	private int collectedAmt;
 	
-	@Column(name = "cause_title",nullable = false, length = 500)
+	@Column(name = "cause_title")
 	private String causeTitle;
 	
 	@Column(name = "created_by")
-	private Integer createdBy;
+	private int createdBy;
 	
-	@Column(name = "cause_for", length = 100)
+	@Column(name = "cause_for")
 	private String causeFor;
 	
 	@Column(name = "accountNumber")
