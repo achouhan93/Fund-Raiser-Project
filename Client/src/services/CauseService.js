@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Stores from '@/store.js'
 export default {
   getAllCauses: async function () {
     return axios
@@ -14,5 +15,14 @@ export default {
     return axios
       .get('http://localhost:8085/cause/SearchCause?causeName=' + causeName + '&categoryId=' + categoryId)
       .then(response => (this.causes = response.data))
+  },
+  createCause: async function (causeData) {
+    const URL = Stores.state.API_URL + 'cause/'
+    return axios({
+      method: 'post',
+      url: URL,
+      headers: {'authorization': Stores.state.jwt},
+      data: causeData
+    })
   }
 }

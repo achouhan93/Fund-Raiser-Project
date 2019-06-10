@@ -26,7 +26,6 @@
             id="description"
             multi-line
             v-model="cause.description"
-            :rules="[rules.required, rules.minLength]"
             required></v-text-field>
           <v-text-field
             name="in Euros"
@@ -89,7 +88,7 @@
 
 <script>
 import axios from 'axios'
-import GetCauseService from '@/services/GetCauseService'
+import GetCauseService from '@/services/CauseService'
 export default {
   name: 'UpdateCause',
   data () {
@@ -97,11 +96,6 @@ export default {
       cause: this.$store.state.causeData,
       causeId: this.$store.state.causeId,
       isDisabled: true,
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Minimum 8 characters',
-        minLength: v => v.length >= 100 || 'Minimum 100 Words'
-      },
       category: ['Natural Disaster', 'Personal', 'Education'],
       description: '',
       cause_target_amt: '',

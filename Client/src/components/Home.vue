@@ -70,7 +70,7 @@
 <script>
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
-import GetCauseService from '@/services/GetCauseService'
+import GetCauseService from '@/services/CauseService'
 
 export default {
   name: 'Home',

@@ -61,7 +61,7 @@
 
 <script>
 // import axios from 'axios'
-import GetCauseService from '@/services/GetCauseService'
+import GetCauseService from '@/services/CauseService'
 export default {
   name: 'CauseDetails',
 
