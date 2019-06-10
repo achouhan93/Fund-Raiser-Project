@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.CauseService;
-
+@CrossOrigin
 @RestController
 @CrossOrigin
 @RequestMapping("/cause")

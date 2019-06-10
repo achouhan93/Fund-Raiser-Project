@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.moneydonationpool.entity.DonationEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 import com.moneydonationpool.service.DonationService;
-
+@CrossOrigin
 @RestController
 @CrossOrigin
 @RequestMapping("/donation")

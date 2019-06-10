@@ -2,6 +2,8 @@ package com.moneydonationpool.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,16 +18,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "Login_Session")
+@Table(name = "Login")
 @JsonInclude(Include.NON_NULL)
 public class LoginEntity {
 	
-	
-	@Column(name = "user_id")
-	private Integer userId;
-	
 	@Id
-	@Column(name = "access_token",nullable = false,length = 2000)
+	@Column(name = "user_id")
+	private int userId;
+	
+	@Column(name = "access_token")
 	private String accessToken;
 
 }
