@@ -38,6 +38,7 @@
 <script>
 
 import { Auth } from 'aws-amplify'
+import LoginLogoutService from '../services/LoginLogoutService'
 // import { AmplifyEventBus } from 'aws-amplify-vue'
 
 export default {
@@ -58,9 +59,11 @@ export default {
         this.navigateTo({ name: 'dashboard' })
       } else if (titleSelected === 'Sign out') {
         Auth.signOut()
-          .then(data => {
-            this.$store.state.signedIn = !!data
-          })
+          .then(
+            LoginLogoutService.getLogout(this.$store.state.jwt),
+            data => {
+              this.$store.state.signedIn = !!data
+            })
           .catch(err => console.log(err))
       }
     }

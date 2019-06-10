@@ -9,6 +9,16 @@ export default {
       url: URL,
       params: {'emailId': emailId},
       headers: {'accessToken': userToken}
-    }).then(this.navigateTo({ name: 'home' }))
+    })
+  },
+  getLogout: async function (userToken) {
+    const URL = Stores.state.API_URL + '/user/logout'
+    axios({
+      method: 'delete',
+      url: URL,
+      headers: {'accessToken': userToken}
+    }).then(
+      Stores.state.jwt = null,
+      this.navigateTo({ name: 'home' }))
   }
 }

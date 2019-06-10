@@ -42,14 +42,13 @@ export default {
         this.$store.state.signedIn = true */
         Stores.state.signedIn = true
         const userEmail = user.attributes.email
-        console.log(userEmail)
         const jwt = user
           .getSignInUserSession()
           .getIdToken()
           .getJwtToken()
-        console.log(jwt)
+        Stores.state.jwt = jwt
         const res = await LoginLogoutService.getLogin(jwt, userEmail)
-          .then(this.navigateTo({ name: 'home' }))
+          .then(this.navigateTo('home'))
           .catch(e => {
             this.errors.push(e)
           })
