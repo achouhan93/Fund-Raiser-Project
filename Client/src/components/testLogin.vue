@@ -37,9 +37,6 @@ export default {
     async findUser () {
       try {
         const user = await Auth.currentAuthenticatedUser()
-        console.log(user)
-        /* this.signedIn = true
-        this.$store.state.signedIn = true */
         Stores.state.signedIn = true
         const userEmail = user.attributes.email
         const jwt = user
@@ -47,12 +44,11 @@ export default {
           .getIdToken()
           .getJwtToken()
         Stores.state.jwt = jwt
-        const res = await LoginLogoutService.getLogin(jwt, userEmail)
+        await LoginLogoutService.getLogin(jwt, userEmail)
           .then(this.navigateTo({name: 'home'}))
           .catch(e => {
             this.errors.push(e)
           })
-        console.log(res)
       } catch (err) {
         this.signedIn = false
       }

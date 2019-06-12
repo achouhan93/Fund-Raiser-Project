@@ -91,7 +91,6 @@ export default {
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
     GetCauseService.getAllCategories()
-    console.log(Stores.state.categories)
   },
   methods: {
     async cause_detail (cause) {
@@ -101,14 +100,10 @@ export default {
       this.$router.push(route)
     },
     async searchCausefilter (searchCategory) {
-      console.log('name ', this.cause_name)
-      console.log('search ', searchCategory)
       this.causes = await GetCauseService.getCauseByNameAndCategoryId(this.cause_name, searchCategory)
-      console.log('res', this.causes)
     }
   }
 }
-console.log(this.causes)
 </script>
 
 <style>

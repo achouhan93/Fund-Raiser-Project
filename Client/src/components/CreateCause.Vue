@@ -14,7 +14,7 @@
             label="Title"
             id="cause_title"
             v-model="cause_title"
-            v-validate="'min:5|max:100|alpha_dash'"
+            v-validate="'min:5|max:100'"
             ></v-text-field>
           <span v-show="errors.has('title')" class="error--text">{{ errors.first('title') }}</span>
           <br>
@@ -157,9 +157,8 @@ export default {
         'bic': this.code,
         'imageName': '3.png'
       }
-      const res = await GetCauseService.createCause(causedata)
+      await GetCauseService.createCause(causedata)
         .then(response => (this.status = response.data))
-      console.log(res)
       this.navigateTo({ name: 'home' })
     }
   }
