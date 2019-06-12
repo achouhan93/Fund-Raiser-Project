@@ -67,7 +67,6 @@ export default {
 
   data () {
     return {
-      // cause_title: this.$route.params.causeTitle
       cause: {},
       causeId: this.$route.params.causeId,
       isUserSignedIn: this.$store.state.signedIn,

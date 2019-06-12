@@ -3,7 +3,7 @@
     <v-flex xs6 offset-xs3>
       <div class="white elevation-2">
         <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Create a Cause</v-toolbar-title>
+          <v-toolbar-title>Update a Cause</v-toolbar-title>
         </v-toolbar>
         <form>
           <div class="pl-4 pr-4 pb-2 pt-2">

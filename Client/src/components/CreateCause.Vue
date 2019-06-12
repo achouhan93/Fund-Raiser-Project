@@ -5,7 +5,7 @@
         <v-toolbar flat dense class="cyan" dark>
           <v-toolbar-title>Create a Cause</v-toolbar-title>
         </v-toolbar>
-        <form @submit.prevent="CreateCause">
+        <form @submit.prevent="createCause">
         <div class="pl-4 pr-4 pb-2 pt-2">
           <br>
           <v-text-field
@@ -31,7 +31,7 @@
             id="description"
             multi-line
             v-model="description"
-            v-validate="'min:50|max:500|alpha_dash'"
+            v-validate="'min:50|max:500'"
           ></v-text-field>
           <span v-show="errors.has('description')" class="error--text">{{ errors.first('description') }}</span>
           <v-text-field
@@ -40,7 +40,7 @@
             placeholder="Enter the targeted amount"
             id="cause_target_amt"
             v-model="cause_target_amt"
-            v-validate="'numeric|min_value:1|max_value:10000000000'"
+            v-validate="'numeric|min_value:1|max_value:10000'"
           ></v-text-field>
           <span v-show="errors.has('targeted amount')" class="error--text">{{ errors.first('targeted amount') }}</span>
           <br>
@@ -89,7 +89,7 @@
             label="BIC Code"
             id="code"
             v-model="code"
-            v-validate="'digits:8'"
+            v-validate="'min:8|max:8|alpha_num'"
           ></v-text-field>
           <span v-show="errors.has('BIC Code')" class="error--text">{{ errors.first('BIC Code') }}</span>
           <br>
