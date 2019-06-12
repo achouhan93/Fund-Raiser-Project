@@ -19,7 +19,8 @@
           <v-select
             :items="category"
             label="Category"
-            item-text="categoryName"></v-select>
+            item-text="categoryName"
+            item-value="categoryId"></v-select>
           <br>
           <v-text-field
             name="Description of the Cause"
@@ -139,7 +140,6 @@ export default {
         'bic': this.code,
         'imageName': '3.png'
       }
-
       const res = await GetCauseService.createCause(causedata)
         .then(response => (this.status = response.data))
       console.log(res)

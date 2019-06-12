@@ -18,7 +18,9 @@
           <br>
           <v-select
             :items="category"
-            label="Category"></v-select>
+            label="Category"
+            item-text="categoryName"
+            item-value="categoryId"></v-select>
           <br>
           <v-text-field
             name="Description of the Cause"
@@ -89,6 +91,7 @@
 <script>
 import axios from 'axios'
 import GetCauseService from '@/services/CauseService'
+import Stores from '@/store.js'
 export default {
   name: 'UpdateCause',
   data () {
@@ -96,7 +99,7 @@ export default {
       cause: this.$store.state.causeData,
       causeId: this.$store.state.causeId,
       isDisabled: true,
-      category: ['Natural Disaster', 'Personal', 'Education'],
+      category: Stores.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null

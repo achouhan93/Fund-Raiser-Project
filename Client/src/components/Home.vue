@@ -118,6 +118,5 @@ console.log(this.causes)
   .search_field {
     margin: 10px auto auto;
     border: 1px;
-
   }
 </style>
