@@ -3,15 +3,17 @@
     <div class="container">
       <div class="col-md-11 col-md-offset-12 section-title">
         <div class="text-center">
-          <h2>Fund Raiser</h2>
+          <h1>Fund Raiser</h1>
           <br>
           <div class="card bg-dark">
             <div class="card-body">
-              <p class="card-text">If you’re raising money for a non-profit, then you might want to look into Fund Raiser!
+              <p align="justify" class="card-text">If fund gathering is an issue faced by non-profit organisation, then you might want to look into Fund Raiser!
 
-                Unlike the other fundraising options, Fund Raiser is focused on giving programs for nonprofits, corporations, and events.
+                Fund Raiser primary objective is to provide a platform for the people who are in need for funds. Funds can be raised for Personal Cause, Medical Cause and Cause related to Natural Calamities.
 
-                That being said, you can also raise money for individual causes using Fund Raiser. Individuals that are part of a “fundraising team” can also use this platform.
+                People can register on the application and provide a helping hand for the cause. Inorder to create a cause contact "Admin" with your problems and once approved by Admin it will be provided on the application.
+
+                Individuals that are part of a “fundraising team” can also use this platform.
               </p>
             </div>
           </div>
