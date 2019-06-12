@@ -8,6 +8,9 @@
       <v-btn flat dark @click="navigateTo({name: 'createcause' })"> Create Cause </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
+    <v-toolbar-items v-if = "this.$store.state.signedIn" >
+      <v-btn flat dark @click="navigateTo({name: 'about' })"> About US </v-btn>
+    </v-toolbar-items>
     <v-toolbar-items>
       <v-menu open-on-hover offset-y v-if = "this.$store.state.signedIn" >
         <template v-slot:activator="{ on }">

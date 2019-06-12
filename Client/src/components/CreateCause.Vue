@@ -5,82 +5,99 @@
         <v-toolbar flat dense class="cyan" dark>
           <v-toolbar-title>Create a Cause</v-toolbar-title>
         </v-toolbar>
-        <form>
-          <div class="pl-4 pr-4 pb-2 pt-2">
-            <br>
-            <v-text-field
-              name="Title of the Cause"
-              label="Title"
-              id="cause_title"
-              v-model="cause_title"
-              :rules="[rules.required, rules.min]"
-              required></v-text-field>
-            <br>
-            <v-select
-              :items="category"
-              label="Category"
-              item-text="categoryName"
-              item-value="categoryId"></v-select>
-            <br>
-            <v-text-field
-              name="Description of the Cause"
-              label="Description"
-              id="description"
-              multi-line
-              v-model="description"
-              :rules="[rules.required, rules.minLength]"
-              required></v-text-field>
-            <v-text-field
-              name="in Euros"
-              label="Targeted Amount"
-              id="cause_target_amt"
-              v-model="cause_target_amt"
-              required></v-text-field>
-            <br>
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="true"
-              :nudge-right="40"
-              lazy
-              transition="scale-transition"
-              offset-y
-              full-width
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="cause_expiration_date"
-                  label="Expiration date"
-                  prepend-icon="event"
-                  readonly
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                ref="picker"
+        <form @submit.prevent="CreateCause">
+        <div class="pl-4 pr-4 pb-2 pt-2">
+          <br>
+          <v-text-field
+            name="title"
+            placeholder="Enter the title of the Cause"
+            label="Title"
+            id="cause_title"
+            v-model="cause_title"
+            v-validate="'min:5|max:100|alpha_dash'"
+            ></v-text-field>
+          <span v-show="errors.has('title')" class="error--text">{{ errors.first('title') }}</span>
+          <br>
+          <v-select
+            :items="category"
+            label="Category"
+            item-text="categoryName"
+            item-value="categoryId"></v-select>
+          <br>
+          <v-text-field
+            name="description"
+            label="Description"
+            placeholder="Enter the Description of the Cause"
+            id="description"
+            multi-line
+            v-model="description"
+            v-validate="'min:50|max:500|alpha_dash'"
+          ></v-text-field>
+          <span v-show="errors.has('description')" class="error--text">{{ errors.first('description') }}</span>
+          <v-text-field
+            name="targeted amount"
+            label="Targeted Amount"
+            placeholder="Enter the targeted amount"
+            id="cause_target_amt"
+            v-model="cause_target_amt"
+            v-validate="'numeric|min_value:1|max_value:10000000000'"
+          ></v-text-field>
+          <span v-show="errors.has('targeted amount')" class="error--text">{{ errors.first('targeted amount') }}</span>
+          <br>
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
                 v-model="cause_expiration_date"
-                :min="new Date().toISOString().substr(0, 10)"
-                max="2025-01-01"
-              ></v-date-picker>
-            </v-menu>
-            <br>
-            <v-text-field
-              name="Please enter the Account Number"
-              label="Account number"
-              id="account_number"
-              v-model="account_number"
-              required></v-text-field>
-            <br>
-            <v-text-field
-              name="Please enter the BIC Code"
-              label="BIC Code"
-              id="code"
-              v-model="code"
-              required></v-text-field>
-            <br>
-            <v-btn @click="createCause" class="cyan btn-createCause">Create Cause</v-btn>
-          </div>
+                label="Expiration date"
+                prepend-icon="event"
+                readonly
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              ref="picker"
+              name="date"
+              v-model="cause_expiration_date"
+              :min="new Date().toISOString().substr(0, 10)"
+              max="2025-01-01"
+              v-validate="'required'"
+            ></v-date-picker>
+          </v-menu>
+          <br>
+          <v-text-field
+          placeholder="Please enter the Account Number"
+          name="account number"
+          label="Account number"
+          id="account_number"
+          v-model="account_number"
+          v-validate="'digits:20'"
+          ></v-text-field>
+          <span v-show="errors.has('account number')" class="error--text">{{ errors.first('account number') }}</span>
+          <br>
+          <v-text-field
+            name="BIC Code"
+            label="BIC Code"
+            id="code"
+            v-model="code"
+            v-validate="'digits:8'"
+          ></v-text-field>
+          <span v-show="errors.has('BIC Code')" class="error--text">{{ errors.first('BIC Code') }}</span>
+          <br>
+          <v-btn
+            class="primary"
+            :disabled="!formIsValid"
+            type="submit">Create Cause</v-btn>
+        </div>
         </form>
       </div>
     </v-flex>

@@ -9,7 +9,7 @@ import UserHome from '@/components/UserHome'
 import testLogin from '@/components/testLogin'
 import Dashboard from '@/components/Dashboard'
 import UpdateCause from '@/components/UpdateCause'
-
+import About from '@/components/About'
 Vue.use(Router)
 
 export default new Router({
@@ -58,6 +58,11 @@ export default new Router({
       path: '/updateCause',
       name: 'updateCause',
       component: UpdateCause
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     }
   ]
 })
