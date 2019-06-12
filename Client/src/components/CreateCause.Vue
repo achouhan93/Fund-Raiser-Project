@@ -6,81 +6,81 @@
           <v-toolbar-title>Create a Cause</v-toolbar-title>
         </v-toolbar>
         <form>
-        <div class="pl-4 pr-4 pb-2 pt-2">
-          <br>
-          <v-text-field
-            name="Title of the Cause"
-            label="Title"
-            id="cause_title"
-            v-model="cause_title"
-            :rules="[rules.required, rules.min]"
-            required></v-text-field>
-          <br>
-          <v-select
-            :items="category"
-            label="Category"
-            item-text="categoryName"
-            item-value="categoryId"></v-select>
-          <br>
-          <v-text-field
-            name="Description of the Cause"
-            label="Description"
-            id="description"
-            multi-line
-            v-model="description"
-            :rules="[rules.required, rules.minLength]"
-            required></v-text-field>
-          <v-text-field
-            name="in Euros"
-            label="Targeted Amount"
-            id="cause_target_amt"
-            v-model="cause_target_amt"
-            required></v-text-field>
-          <br>
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            lazy
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on }">
-              <v-text-field
+          <div class="pl-4 pr-4 pb-2 pt-2">
+            <br>
+            <v-text-field
+              name="Title of the Cause"
+              label="Title"
+              id="cause_title"
+              v-model="cause_title"
+              :rules="[rules.required, rules.min]"
+              required></v-text-field>
+            <br>
+            <v-select
+              :items="category"
+              label="Category"
+              item-text="categoryName"
+              item-value="categoryId"></v-select>
+            <br>
+            <v-text-field
+              name="Description of the Cause"
+              label="Description"
+              id="description"
+              multi-line
+              v-model="description"
+              :rules="[rules.required, rules.minLength]"
+              required></v-text-field>
+            <v-text-field
+              name="in Euros"
+              label="Targeted Amount"
+              id="cause_target_amt"
+              v-model="cause_target_amt"
+              required></v-text-field>
+            <br>
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="true"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="cause_expiration_date"
+                  label="Expiration date"
+                  prepend-icon="event"
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                ref="picker"
                 v-model="cause_expiration_date"
-                label="Expiration date"
-                prepend-icon="event"
-                readonly
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              ref="picker"
-              v-model="cause_expiration_date"
-              :min="new Date().toISOString().substr(0, 10)"
-              max="2025-01-01"
-            ></v-date-picker>
-          </v-menu>
-          <br>
-          <v-text-field
-          name="Please enter the Account Number"
-          label="Account number"
-          id="account_number"
-          v-model="account_number"
-          required></v-text-field>
-          <br>
-          <v-text-field
-            name="Please enter the BIC Code"
-            label="BIC Code"
-            id="code"
-            v-model="code"
-            required></v-text-field>
-          <br>
-          <v-btn @click="createCause" class="cyan btn-createCause">Create Cause</v-btn>
-        </div>
+                :min="new Date().toISOString().substr(0, 10)"
+                max="2025-01-01"
+              ></v-date-picker>
+            </v-menu>
+            <br>
+            <v-text-field
+              name="Please enter the Account Number"
+              label="Account number"
+              id="account_number"
+              v-model="account_number"
+              required></v-text-field>
+            <br>
+            <v-text-field
+              name="Please enter the BIC Code"
+              label="BIC Code"
+              id="code"
+              v-model="code"
+              required></v-text-field>
+            <br>
+            <v-btn @click="createCause" class="cyan btn-createCause">Create Cause</v-btn>
+          </div>
         </form>
       </div>
     </v-flex>
@@ -111,12 +111,12 @@ export default {
   computed: {
     formIsValid () {
       return this.cause_title !== '' &&
-        this.category !== '' &&
-        this.description !== '' &&
-        this.cause_target_amt !== '' &&
-        this.cause_expiration_date !== '' &&
-        this.account_number !== '' &&
-        this.code !== ''
+          this.category !== '' &&
+          this.description !== '' &&
+          this.cause_target_amt !== '' &&
+          this.cause_expiration_date !== '' &&
+          this.account_number !== '' &&
+          this.code !== ''
     }
   },
   methods: {
@@ -128,7 +128,7 @@ export default {
         return
       }
 
-      var causedata = {
+      const causedata = {
         'categoryId': 1,
         'causeTargetAmt': Number(this.cause_target_amt),
         'causeExpirationDate': this.cause_expiration_date,
