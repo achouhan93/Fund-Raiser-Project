@@ -114,29 +114,29 @@ export default {
           this.cause_target_amt !== '' &&
           this.cause_expiration_date !== '' &&
           this.imageUrl !== ''
+    }
+  },
+  methods: {
+    navigateTo (route) {
+      this.$router.push(route)
     },
-    methods: {
-      navigateTo (route) {
-        this.$router.push(route)
-      },
-      async updateCause () {
-        if (!this.formIsValid) {
-          return
-        }
-        if (!this.image) {
-          return
-        }
-        this.cause.description = this.description
-        this.cause.category = this.category
-        this.cause.causeExpirationDate = this.cause_expiration_date
-        this.cause.causeTargetAmt = this.cause_target_amt
-        await axios.put(`http://localhost:8085/cause/` + this.causeId,
-          this.cause
-        )
-          .then(response => (this.status = response.data))
-
-        this.navigateTo({name: 'home'})
+    async updateCause () {
+      if (!this.formIsValid) {
+        return
       }
+      if (!this.image) {
+        return
+      }
+      this.cause.description = this.description
+      this.cause.category = this.category
+      this.cause.causeExpirationDate = this.cause_expiration_date
+      this.cause.causeTargetAmt = this.cause_target_amt
+      await axios.put(`http://localhost:8085/cause/` + this.causeId,
+        this.cause
+      )
+        .then(response => (this.status = response.data))
+
+      this.navigateTo({name: 'home'})
     }
   }
 }

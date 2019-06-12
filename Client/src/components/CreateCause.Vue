@@ -18,7 +18,8 @@
           <br>
           <v-select
             :items="category"
-            label="Category"></v-select>
+            label="Category"
+            item-text="categoryName"></v-select>
           <br>
           <v-text-field
             name="Description of the Cause"
@@ -87,11 +88,12 @@
 
 <script>
 import GetCauseService from '../services/CauseService'
+import Stores from '@/store.js'
 export default {
   data () {
     return {
       cause_title: '',
-      category: ['Natural Disaster', 'Personal', 'Education'],
+      category: Stores.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null,

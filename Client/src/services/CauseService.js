@@ -24,5 +24,10 @@ export default {
       headers: {'authorization': Stores.state.jwt},
       data: causeData
     })
+  },
+  getAllCategories: async function () {
+    return axios
+      .get('http://localhost:8085/category/')
+      .then(responses => (Stores.state.categories = responses.data))
   }
 }
