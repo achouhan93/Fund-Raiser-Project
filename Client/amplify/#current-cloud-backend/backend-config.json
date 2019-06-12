@@ -1,0 +1,8 @@
+{
+	"auth": {
+		"fundraiser1f957bd9": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

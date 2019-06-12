@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "fundraiser-dev-20190608003706-authRole",
+            "UnauthRoleArn": "arn:aws:iam::663106390769:role/fundraiser-dev-20190608003706-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::663106390769:role/fundraiser-dev-20190608003706-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "fundraiser-dev-20190608003706-deployment",
+            "UnauthRoleName": "fundraiser-dev-20190608003706-unauthRole",
+            "StackName": "fundraiser-dev-20190608003706",
+            "StackId": "arn:aws:cloudformation:eu-central-1:663106390769:stack/fundraiser-dev-20190608003706/c8983260-8974-11e9-8a33-066084ff6f3a"
+        },
+        "categories": {
+            "auth": {
+                "fundraiser1f957bd9": {}
+            }
+        }
+    }
+}

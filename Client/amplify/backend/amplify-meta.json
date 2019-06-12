@@ -1,0 +1,35 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "fundraiser-dev-20190608003706-authRole",
+			"UnauthRoleArn": "arn:aws:iam::663106390769:role/fundraiser-dev-20190608003706-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::663106390769:role/fundraiser-dev-20190608003706-authRole",
+			"Region": "eu-central-1",
+			"DeploymentBucketName": "fundraiser-dev-20190608003706-deployment",
+			"UnauthRoleName": "fundraiser-dev-20190608003706-unauthRole",
+			"StackName": "fundraiser-dev-20190608003706",
+			"StackId": "arn:aws:cloudformation:eu-central-1:663106390769:stack/fundraiser-dev-20190608003706/c8983260-8974-11e9-8a33-066084ff6f3a"
+		}
+	},
+	"auth": {
+		"fundraiser1f957bd9": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/fundraiser-dev-20190608003706-deployment/amplify-cfn-templates/auth/fundraiser1f957bd9-cloudformation-template.yml",
+				"logicalId": "authfundraiser1f957bd9"
+			},
+			"lastPushTimeStamp": "2019-06-07T22:41:53.752Z",
+			"output": {
+				"AppClientSecret": "13gk1nnnhv53c4p8kpg118ngb8llsr7olh3m19f727h5cv2igu6k",
+				"UserPoolId": "eu-central-1_nwdCBsQz1",
+				"AppClientIDWeb": "20c1p7o7uhl00atv2buvt69olg",
+				"AppClientID": "38g2mckao1vbdtt4srsgnb809t",
+				"IdentityPoolId": "eu-central-1:5911a9ff-afa8-4852-a362-a1d269b7deeb",
+				"IdentityPoolName": "fundraiser1f957bd9_identitypool_1f957bd9__dev",
+				"UserPoolName": "fundraiser1f957bd9_userpool_1f957bd9"
+			},
+			"lastPushDirHash": "TncjBu7dpnb06nsMiT1oM71XNMU="
+		}
+	}
+}
