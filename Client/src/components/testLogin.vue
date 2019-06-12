@@ -17,18 +17,12 @@ import LoginLogoutService from '../services/LoginLogoutService'
 
 export default {
   name: 'testLogin',
-  data () {
-    return {
-      signedIn: this.$store.state.signedIn
-    }
-  },
   created () {
     this.findUser()
     AmplifyEventBus.$on('authState', info => {
       if (info === 'signedIn') {
         this.findUser()
       } else {
-        this.signedIn = false
         this.$store.state.signedIn = false
       }
     })
@@ -38,6 +32,7 @@ export default {
       try {
         const user = await Auth.currentAuthenticatedUser()
         Stores.state.signedIn = true
+        Stores.state.user = user.attributes
         const userEmail = user.attributes.email
         const jwt = user
           .getSignInUserSession()
@@ -51,6 +46,7 @@ export default {
           })
       } catch (err) {
         this.signedIn = false
+        this.$store.state.signedIn = false
       }
     },
     navigateTo (route) {

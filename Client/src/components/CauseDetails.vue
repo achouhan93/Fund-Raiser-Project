@@ -50,7 +50,7 @@
             </div>
             <div>
               <v-btn class="cyan btn-update" @click="cancelDonation">Cancel</v-btn>
-              <v-btn class="cyan btn-donate" >Pay</v-btn>
+              <v-btn class="cyan btn-donate" @click="makeDonation" >Pay</v-btn>
             </div>
           </v-flex>
       </v-card>
@@ -62,6 +62,7 @@
 <script>
 // import axios from 'axios'
 import GetCauseService from '@/services/CauseService'
+import CauseService from '../services/CauseService'
 export default {
   name: 'CauseDetails',
 
@@ -90,6 +91,16 @@ export default {
     navigateTo (route) {
       this.$store.state.causeId = this.causeId
       this.$router.push(route)
+    },
+    async makeDonation () {
+      console.log('Inside Make Donation')
+      const config = {
+        'causeId': this.cause.causeId,
+        'amountDonated': this.donationAmount
+      }
+      await CauseService.postDonation(config)
+        .then(response => (this.status = response.data))
+      this.navigateTo({name: 'home'})
     }
   }
 }
