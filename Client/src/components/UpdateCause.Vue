@@ -13,7 +13,10 @@
               label="Title"
               id="cause_title"
               v-model="cause.causeTitle"
+              disabled
+              v-validate="'required|min:10'"
             ></v-text-field>
+            <span v-show="errors.has('Title of the Cause')" class="error--text" >{{ errors.first('Title of the Cause') }}</span>
             <br>
             <v-text-field
               name="Description of the Cause"
@@ -21,13 +24,17 @@
               id="description"
               multi-line
               v-model="cause.description"
+              v-validate="'required|min:50'"
               required></v-text-field>
+            <span v-show="errors.has('Description of the Cause')" class="error--text" >{{ errors.first('Description of the Cause') }}</span>
             <v-text-field
-              name="in Euros"
+              name="Target Amount"
               label="Targeted Amount"
               id="cause_target_amt"
               v-model="cause.causeTargetAmt"
-              required></v-text-field>
+              v-validate="'required|numeric|min_value:'+cause_collected_amt"
+            ></v-text-field>
+            <span v-show="errors.has('Target Amount')" class="error--text" >{{ errors.first('Target Amount') }}</span>
             <br>
             <v-menu
               ref="menu"
@@ -75,7 +82,7 @@ export default {
       causeId: this.$store.state.causeId,
       isDisabled: true,
       description: '',
-      cause_target_amt: '',
+      cause_collected_amt: this.$store.state.causeData.collectedAmt,
       cause_expiration_date: this.$store.state.causeData.causeExpirationDate
     }
   },
@@ -91,10 +98,14 @@ export default {
       this.$router.push(route)
     },
     async updCause () {
-      this.cause.causeExpirationDate = this.cause_expiration_date
-      await CauseService.updateCause(this.cause)
-        .then(response => (this.status = response.data))
-      this.navigateTo({name: 'home'})
+      this.$validator.validateAll()
+      if (!this.errors.any()) {
+        console.log(this.cause)
+        this.cause.causeExpirationDate = this.cause_expiration_date
+        await CauseService.updateCause(this.cause)
+          .then(response => (this.status = response.data))
+        this.navigateTo({name: 'home'})
+      }
     }
   }
 }
