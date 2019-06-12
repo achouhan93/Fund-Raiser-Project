@@ -91,7 +91,6 @@ export default {
       this.$router.push(route)
     },
     async updCause () {
-      console.log(this.cause)
       this.cause.causeExpirationDate = this.cause_expiration_date
       await CauseService.updateCause(this.cause)
         .then(response => (this.status = response.data))

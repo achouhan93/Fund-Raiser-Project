@@ -27,7 +27,6 @@ export default {
   },
   updateCause: async function (causeData) {
     const URL = Stores.state.API_URL + 'cause/'
-    console.log(URL)
     return axios({
       method: 'put',
       url: URL,
@@ -42,7 +41,6 @@ export default {
   },
   postDonation: async function (config) {
     const URL = Stores.state.API_URL + 'donation/'
-    console.log(URL)
     return axios({
       method: 'post',
       url: URL,

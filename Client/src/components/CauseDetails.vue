@@ -79,7 +79,6 @@ export default {
   async mounted () {
     this.cause = await GetCauseService.getCauseById(this.causeId)
     this.$store.state.causeData = this.cause
-    console.log(this.cause)
   },
   methods: {
     cancelDonation () {
@@ -88,7 +87,6 @@ export default {
     initDonation () {
       this.donationPanelVisible = true
       this.maxDonationValue = this.cause.causeTargetAmt - this.cause.collectedAmt
-      console.log(this.maxDonationValue)
     },
     navigateTo (route) {
       this.$store.state.causeId = this.causeId

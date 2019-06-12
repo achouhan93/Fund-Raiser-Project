@@ -62,14 +62,12 @@ export default {
       if (titleSelected === 'Dashboard') {
         this.navigateTo({ name: 'dashboard' })
       } else if (titleSelected === 'Sign out') {
-        console.log(this.$store.state.jwt + 'before log out ')
         Auth.signOut()
           .then(LoginLogoutService.getLogout(this.$store.state.jwt))
         this.redirectToHome()
       }
     },
     redirectToHome () {
-      console.log(this.$store.state.jwt)
       if (this.$store.state.jwt == null) {
         this.$store.state.signedIn = false
         this.navigateTo({ name: 'home' })
