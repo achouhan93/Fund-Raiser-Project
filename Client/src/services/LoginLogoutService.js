@@ -18,7 +18,7 @@ export default {
       url: URL,
       headers: {'authorization': userToken}
     }).then(
-      Stores.state.jwt = null,
-      this.navigateTo({ name: 'home' }))
+      Stores.state.jwt = null
+    )
   }
 }

@@ -11,7 +11,7 @@
 
 <script>
 import { Auth } from 'aws-amplify'
-/* import { AmplifyEventBus } from 'aws-amplify-vue' */
+import { AmplifyEventBus } from 'aws-amplify-vue'
 import Stores from '@/store.js'
 import LoginLogoutService from '../services/LoginLogoutService'
 
@@ -24,14 +24,14 @@ export default {
   },
   created () {
     this.findUser()
-    /*    AmplifyEventBus.$on('authState', info => {
+    AmplifyEventBus.$on('authState', info => {
       if (info === 'signedIn') {
         this.findUser()
       } else {
         this.signedIn = false
         this.$store.state.signedIn = false
       }
-    }) */
+    })
   },
   methods: {
     async findUser () {
@@ -48,7 +48,7 @@ export default {
           .getJwtToken()
         Stores.state.jwt = jwt
         const res = await LoginLogoutService.getLogin(jwt, userEmail)
-          .then(this.navigateTo('home'))
+          .then(this.navigateTo({name: 'home'}))
           .catch(e => {
             this.errors.push(e)
           })

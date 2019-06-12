@@ -11,7 +11,7 @@ export default new Vuex.Store({
     causeId: 0,
     causeData: [],
     API_URL: 'http://localhost:8085/',
-    jwt: null
+    jwt: ''
 
   },
   mutations: {
