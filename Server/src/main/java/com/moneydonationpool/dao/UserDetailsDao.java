@@ -28,7 +28,7 @@ public interface UserDetailsDao {
 
 	String userTokenDeRegistery(LoginEntity loginEntity);
 	
-	public LoginEntity checkUserSessionDetails(String accessToken);
+	public LoginEntity checkUserSessionDetails(String authorization);
 
 
 }

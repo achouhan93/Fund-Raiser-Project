@@ -36,36 +36,33 @@ public class CauseEntity {
 	@Column(name = "cause_target_amt",nullable = false)
 	private Integer causeTargetAmt;
 	
-	@Column(name = "creation_date")
+	@Column(name = "creation_date",nullable = false)
 	private Timestamp creationDate;
 	
 	@Column(name = "is_active",nullable = false)
-	private boolean isActive;
+	private Boolean isActive;
 	
 	@Column(name = "cause_expiration_date",nullable = false)
 	private Date causeExpirationDate;
 	
-	@Column(name = "description",length = 5000)
+	@Column(name = "description",length=5000)
 	private String description;
 	
-	@Column(name = "collected_amt")
+	@Column(name = "collected_amt",nullable = false)
 	private Integer collectedAmt;
 	
-	@Column(name = "cause_title",nullable = false, length = 500)
+	@Column(name = "cause_title",nullable = false,length=500)
 	private String causeTitle;
 	
 	@Column(name = "created_by")
 	private Integer createdBy;
 	
-	@Column(name = "cause_for", length = 100)
-	private String causeFor;
-	
-	@Column(name = "accountNumber")
+	@Column(name = "accountNumber",nullable = false,length=20)
 	private String bankAccountNumber;
 	
-	@Column(name = "BIC")
+	@Column(name = "BIC",nullable = false,length=20)
 	private String bic;
 
-	@Column(name = "image_name")
+	@Column(name = "image_name",nullable = false)
 	private String imageName;
 }

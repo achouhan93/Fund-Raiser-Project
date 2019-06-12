@@ -18,7 +18,9 @@
           <br>
           <v-select
             :items="category"
-            label="Category"></v-select>
+            label="Category"
+            item-text="categoryName"
+            item-value="categoryId"></v-select>
           <br>
           <v-text-field
             name="Description of the Cause"
@@ -26,7 +28,6 @@
             id="description"
             multi-line
             v-model="cause.description"
-            :rules="[rules.required, rules.minLength]"
             required></v-text-field>
           <v-text-field
             name="in Euros"
@@ -89,7 +90,8 @@
 
 <script>
 import axios from 'axios'
-import GetCauseService from '@/services/GetCauseService'
+import GetCauseService from '@/services/CauseService'
+import Stores from '@/store.js'
 export default {
   name: 'UpdateCause',
   data () {
@@ -97,12 +99,7 @@ export default {
       cause: this.$store.state.causeData,
       causeId: this.$store.state.causeId,
       isDisabled: true,
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Minimum 8 characters',
-        minLength: v => v.length >= 100 || 'Minimum 100 Words'
-      },
-      category: ['Natural Disaster', 'Personal', 'Education'],
+      category: Stores.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null
@@ -120,29 +117,29 @@ export default {
           this.cause_target_amt !== '' &&
           this.cause_expiration_date !== '' &&
           this.imageUrl !== ''
+    }
+  },
+  methods: {
+    navigateTo (route) {
+      this.$router.push(route)
     },
-    methods: {
-      navigateTo (route) {
-        this.$router.push(route)
-      },
-      async updateCause () {
-        if (!this.formIsValid) {
-          return
-        }
-        if (!this.image) {
-          return
-        }
-        this.cause.description = this.description
-        this.cause.category = this.category
-        this.cause.causeExpirationDate = this.cause_expiration_date
-        this.cause.causeTargetAmt = this.cause_target_amt
-        await axios.put(`http://localhost:8085/cause/` + this.causeId,
-          this.cause
-        )
-          .then(response => (this.status = response.data))
-
-        this.navigateTo({name: 'home'})
+    async updateCause () {
+      if (!this.formIsValid) {
+        return
       }
+      if (!this.image) {
+        return
+      }
+      this.cause.description = this.description
+      this.cause.category = this.category
+      this.cause.causeExpirationDate = this.cause_expiration_date
+      this.cause.causeTargetAmt = this.cause_target_amt
+      await axios.put(`http://localhost:8085/cause/` + this.causeId,
+        this.cause
+      )
+        .then(response => (this.status = response.data))
+
+      this.navigateTo({name: 'home'})
     }
   }
 }

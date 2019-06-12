@@ -30,28 +30,28 @@ public class UserDetailsController {
 
 	
 	@GetMapping("/")
-	public UserDetailsModel getUserDetails(@RequestHeader String accessToken) {
+	public UserDetailsModel getUserDetails(@RequestHeader String authorization) {
 		LOGGER.info("getAllActiveCauses service called");
-		return userDetailsService.getUserDetails(accessToken);
+		return userDetailsService.getUserDetails(authorization);
 	}
 
 	
-	@PutMapping(value = "/", params = { "userId", "userToPromote" })
-	public UserDetailsEntity PromoteToAdmin(@RequestHeader String accessToken,@RequestParam int userId, @RequestParam int userToPromote) throws MoneyDonationPoolException {
+	@PutMapping(value = "/", params = { "authorization", "userToPromote" })
+	public UserDetailsEntity PromoteToAdmin(@RequestHeader String authorization, @RequestParam int userToPromote) throws MoneyDonationPoolException {
 		LOGGER.info("PromoteToAdmin service called");
-		return userDetailsService.PromoteToAdmin(userId,userToPromote);
+		return userDetailsService.PromoteToAdmin(authorization,userToPromote);
 	}
 	
 	@PostMapping("/login")
-	public String userTokenRegistery(@RequestHeader String accessToken,@RequestParam String emailId) throws MoneyDonationPoolException {
+	public String userTokenRegistery(@RequestHeader String authorization,@RequestParam String emailId) throws MoneyDonationPoolException {
 		LOGGER.info("userTokenRegistery service called");
-		return userDetailsService.userTokenRegistery(accessToken,emailId);
+		return userDetailsService.userTokenRegistery(authorization,emailId);
 	}	
 	
 	@DeleteMapping("/logout")
-	public String userTokenDeRegistery(@RequestHeader String accessToken) throws MoneyDonationPoolException {
+	public String userTokenDeRegistery(@RequestHeader String authorization) throws MoneyDonationPoolException {
 		LOGGER.info("userTokenDeRegistery service called");
-		return userDetailsService.userTokenDeRegistery(accessToken);
+		return userDetailsService.userTokenDeRegistery(authorization);
 	}
 	
 }

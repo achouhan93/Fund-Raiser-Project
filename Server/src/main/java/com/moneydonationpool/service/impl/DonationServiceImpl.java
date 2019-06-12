@@ -31,8 +31,8 @@ public class DonationServiceImpl implements DonationService {
 	UserDetailsDao userDetailsDao;
 
 	@Override
-	public DonationEntity postDonationDetails(String accessToken,DonationEntity donationDetails) throws MoneyDonationPoolException {
-		LoginEntity fetchUserDetails =  userDetailsDao.checkUserSessionDetails(accessToken);
+	public DonationEntity postDonationDetails(String authorization,DonationEntity donationDetails) throws MoneyDonationPoolException {
+		LoginEntity fetchUserDetails =  userDetailsDao.checkUserSessionDetails(authorization);
 		donationDetails.setDonatedBy(fetchUserDetails.getUserId());
 		int causeId = donationDetails.getCauseId();
 		DonationEntity donationEntity = null;
@@ -41,7 +41,7 @@ public class DonationServiceImpl implements DonationService {
 		{
 			donationEntity = donationDao.postDonationDetails(donationDetails);
 			causeDetails.setCollectedAmt(donationDetails.getAmountDonated() + causeDetails.getCollectedAmt());
-			causeDetails.setActive(false);
+			causeDetails.setIsActive(false);
 			causeDao.updateCause(causeDetails);
 			return donationEntity;
 		}

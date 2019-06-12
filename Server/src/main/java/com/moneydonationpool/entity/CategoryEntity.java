@@ -27,10 +27,10 @@ public class CategoryEntity {
 	@Column(name = "category_id")
 	private Integer categoryId;
 	
-	@Column(name = "category_name",length=200)
+	@Column(name = "category_name",nullable = false,length=200)
 	private String categoryName;
 	
-	@Column(name = "image_name",length=100)
+	@Column(name = "image_name",nullable = false,length=100)
 	private String imageName;
 
 }

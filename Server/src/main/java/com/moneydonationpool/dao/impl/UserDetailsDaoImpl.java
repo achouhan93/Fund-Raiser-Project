@@ -93,10 +93,10 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	}
 	
 	@Override
-	public LoginEntity checkUserSessionDetails(String accessToken) {
+	public LoginEntity checkUserSessionDetails(String authorization) {
 		Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<LoginEntity> loginEntity = session.createQuery("from LoginEntity l where l.accessToken ='"+accessToken+"'").list();
+		List<LoginEntity> loginEntity = session.createQuery("from LoginEntity l where l.accessToken ='"+authorization+"'").list();
 		return loginEntity.get(0);
 	}
 

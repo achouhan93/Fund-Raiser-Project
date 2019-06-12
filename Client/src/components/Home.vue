@@ -70,7 +70,8 @@
 <script>
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
-import GetCauseService from '@/services/GetCauseService'
+import GetCauseService from '@/services/CauseService'
+import Stores from '@/store.js'
 
 export default {
   name: 'Home',
@@ -84,17 +85,13 @@ export default {
       v_binding_flex: 6,
       causeId: '123',
       cause_name: ' ',
-      category: [
-        { categoryName: 'All', categoryValue: 0 },
-        { categoryName: 'Natural Disaster', categoryValue: 1 },
-        { categoryName: 'Personal', categoryValue: 2 },
-        { categoryName: 'Education', categoryValue: 3 }
-      ]
+      category: Stores.state.categories
     }
   },
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
-    console.log(this.causes)
+    GetCauseService.getAllCategories()
+    console.log(Stores.state.categories)
   },
   methods: {
     async cause_detail (cause) {
@@ -121,6 +118,5 @@ console.log(this.causes)
   .search_field {
     margin: 10px auto auto;
     border: 1px;
-
   }
 </style>

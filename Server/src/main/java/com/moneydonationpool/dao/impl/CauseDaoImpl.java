@@ -56,7 +56,7 @@ public class CauseDaoImpl implements CauseDao {
 		Session session = sessionFactory.getCurrentSession();
 		CauseEntity deleteCause = session.get(CauseEntity.class, causeId);
 
-		deleteCause.setActive(false);
+		deleteCause.setIsActive(false);
 		session.update(deleteCause);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

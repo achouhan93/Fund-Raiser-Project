@@ -18,7 +18,9 @@
           <br>
           <v-select
             :items="category"
-            label="Category"></v-select>
+            label="Category"
+            item-text="categoryName"
+            item-value="categoryId"></v-select>
           <br>
           <v-text-field
             name="Description of the Cause"
@@ -86,12 +88,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import GetCauseService from '../services/CauseService'
+import Stores from '@/store.js'
 export default {
   data () {
     return {
       cause_title: '',
-      category: ['Natural Disaster', 'Personal', 'Education'],
+      category: Stores.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null,
@@ -124,29 +127,22 @@ export default {
       if (!this.formIsValid) {
         return
       }
-      var today = new Date()
 
       var causedata = {
         'categoryId': 1,
         'causeTargetAmt': Number(this.cause_target_amt),
-        'creationDate': today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
         'causeExpirationDate': this.cause_expiration_date,
         'description': this.description,
         'collectedAmt': 0,
         'causeTitle': this.cause_title,
-        'createdBy': 8,
+        'isActive': true,
         'bankAccountNumber': this.account_number,
         'bic': this.code,
-        'imageName': '1.png',
-        'active': true,
-        image: this.image
+        'imageName': '3.png'
       }
-
-      await axios.post(`http://localhost:8085/cause/20`,
-        causedata
-      )
+      const res = await GetCauseService.createCause(causedata)
         .then(response => (this.status = response.data))
-
+      console.log(res)
       this.navigateTo({ name: 'home' })
     }
   }

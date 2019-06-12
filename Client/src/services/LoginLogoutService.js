@@ -8,7 +8,7 @@ export default {
       method: 'post',
       url: URL,
       params: {'emailId': emailId},
-      headers: {'accessToken': userToken}
+      headers: {'authorization': userToken}
     })
   },
   getLogout: async function (userToken) {
@@ -16,9 +16,9 @@ export default {
     axios({
       method: 'delete',
       url: URL,
-      headers: {'accessToken': userToken}
+      headers: {'authorization': userToken}
     }).then(
-      Stores.state.jwt = null,
-      this.navigateTo({ name: 'home' }))
+      Stores.state.jwt = null
+    )
   }
 }
