@@ -4,7 +4,7 @@
       <v-toolbar class="cyan">
         <v-toolbar-title class="home_title">Discover</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-flex xs12 sm6 md3>
+        <!--<v-flex xs12 sm6 md3>
           <v-text-field
             class="mx-3 search_field"
             flat
@@ -22,7 +22,7 @@
             @change="searchCausefilter"
             name="search_category"
             solo></v-select>
-        </v-flex>
+        </v-flex>-->
       </v-toolbar>
       <v-card>
         <v-container
@@ -71,7 +71,7 @@
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
 import GetCauseService from '@/services/CauseService'
-import Stores from '@/store.js'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -79,13 +79,19 @@ export default {
     Panel,
     CauseDetails
   },
+  created () {
+    console.log('Start home created ' + this.$store.state.isAdmin)
+    this.isAdmin()
+    console.log('End home created ' + this.$store.state.isAdmin)
+  },
   data () {
     return {
       causes: [],
       v_binding_flex: 6,
       causeId: '123',
       cause_name: ' ',
-      category: Stores.state.categories
+      category: this.$store.state.categories,
+      searchedCauses: []
     }
   },
   async mounted () {
@@ -100,7 +106,27 @@ export default {
       this.$router.push(route)
     },
     async searchCausefilter (searchCategory) {
-      this.causes = await GetCauseService.getCauseByNameAndCategoryId(this.cause_name, searchCategory)
+      this.searchedCauses = await GetCauseService.searchCauseByNameAndId(this.cause_name, searchCategory)
+      this.cause = this.searchedCauses.data
+      console.log(this.causes)
+    },
+    async isAdmin () {
+      const URL = 'http://localhost:8085/user/'
+      const resp = await axios({
+        method: 'get',
+        url: URL,
+        headers: {'authorization': this.$store.state.jwt}
+      })
+      console.log(resp.data)
+      this.$store.state.user = resp.data
+      console.log('checking is admin')
+      console.log(this.$store.state.user.userDetails.userType)
+      if (this.$store.state.user.userDetails.userType === 'admin') {
+        console.log('in if admin')
+        this.$store.state.isAdmin = true
+        console.log(this.$store.state.isAdmin)
+        console.log(this.$store.state.signedIn)
+      }
     }
   }
 }

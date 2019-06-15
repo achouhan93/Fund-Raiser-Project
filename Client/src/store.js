@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     user: null,
     signedIn: false,
@@ -12,7 +12,9 @@ export default new Vuex.Store({
     causeData: [],
     API_URL: 'http://localhost:8085/',
     jwt: '',
-    categories: []
+    categories: [],
+    isAdmin: false,
+    userEmail: ''
 
   },
   mutations: {
@@ -22,3 +24,4 @@ export default new Vuex.Store({
 
   }
 })
+window.store = store

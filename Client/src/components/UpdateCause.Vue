@@ -10,6 +10,7 @@
             <br>
             <v-text-field
               name="Title of the Cause"
+              placeholder="Enter the title of the Cause"
               label="Title"
               id="cause_title"
               v-model="cause.causeTitle"
@@ -21,18 +22,20 @@
             <v-text-field
               name="Description of the Cause"
               label="Description"
+              placeholder="Enter the Description of the Cause"
               id="description"
               multi-line
               v-model="cause.description"
-              v-validate="'required|min:50'"
+              v-validate="'min:50|max:500'"
               required></v-text-field>
             <span v-show="errors.has('Description of the Cause')" class="error--text" >{{ errors.first('Description of the Cause') }}</span>
             <v-text-field
               name="Target Amount"
               label="Targeted Amount"
+              placeholder="Enter the targeted amount"
               id="cause_target_amt"
               v-model="cause.causeTargetAmt"
-              v-validate="'required|numeric|min_value:'+cause_collected_amt"
+              v-validate="'required|numeric|max_value:10000|min_value:'+cause_collected_amt"
             ></v-text-field>
             <span v-show="errors.has('Target Amount')" class="error--text" >{{ errors.first('Target Amount') }}</span>
             <br>

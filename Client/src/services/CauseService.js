@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Stores from '@/store.js'
 export default {
   getAllCauses: async function () {
     return axios
@@ -17,35 +16,69 @@ export default {
       .then(response => (this.causes = response.data))
   },
   createCause: async function (causeData) {
-    const URL = Stores.state.API_URL + 'cause/'
+    const URL = this.$store.state.API_URL + 'cause/'
     return axios({
       method: 'post',
       url: URL,
-      headers: {'authorization': Stores.state.jwt},
+      headers: {'authorization': this.$store.state.jwt},
       data: causeData
     })
   },
   updateCause: async function (causeData) {
-    const URL = Stores.state.API_URL + 'cause/'
+    const URL = this.$store.state.API_URL + 'cause/'
     return axios({
       method: 'put',
       url: URL,
-      headers: {'authorization': Stores.state.jwt},
+      headers: {'authorization': this.$store.state.jwt},
       data: causeData
     })
   },
   getAllCategories: async function () {
     return axios
       .get('http://localhost:8085/category/')
-      .then(responses => (Stores.state.categories = responses.data))
+      .then(responses => (this.$store.state.categories = responses.data))
   },
   postDonation: async function (config) {
-    const URL = Stores.state.API_URL + 'donation/'
+    const URL = this.$store.state.API_URL + 'donation/'
     return axios({
       method: 'post',
       url: URL,
-      headers: {'authorization': Stores.state.jwt},
+      headers: {'authorization': this.$store.state.jwt},
       data: config
+    })
+  },
+  /* searchCauseByNameAndId: async function (causeName, categoryId) {
+    console.log('causename and categ ' + causeName + categoryId)
+    var catId = 0
+    switch (categoryId) {
+      case 'Education Help' : catId = 3
+        break
+      case 'Medical Cause' : catId = 2
+        break
+      case 'Natural Disaster' : catId = 1
+        break
+    }
+    return axios
+      .get('localhost:8085/cause/searchCause?searchString=' + causeName + '&categoryId=' + catId)
+      .then(response => (this.causes = response.data))
+  } */
+  searchCauseByNameAndId: async function (causeName, categoryId) {
+    // console.log('causename and categ ' + causeName + categoryId)
+    var catId = 0
+    switch (categoryId) {
+      case 'Education Help' : catId = 3
+        break
+      case 'Medical Cause' : catId = 2
+        break
+      case 'Natural Disaster' : catId = 1
+        break
+    }
+
+    const URL = this.$store.state.API_URL + 'cause/searchCause'
+    return axios({
+      method: 'get',
+      url: URL,
+      params: { 'categoryId': catId, 'searchString': causeName }
     })
   }
 }

@@ -106,12 +106,11 @@
 
 <script>
 import GetCauseService from '../services/CauseService'
-import Stores from '@/store.js'
 export default {
   data () {
     return {
       cause_title: '',
-      category: Stores.state.categories,
+      category: this.$store.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null,
@@ -146,7 +145,7 @@ export default {
       }
 
       const causedata = {
-        'categoryId': 1,
+        'categoryId': 2,
         'causeTargetAmt': Number(this.cause_target_amt),
         'causeExpirationDate': this.cause_expiration_date,
         'description': this.description,
@@ -155,7 +154,7 @@ export default {
         'isActive': true,
         'bankAccountNumber': this.account_number,
         'bic': this.code,
-        'imageName': '3.png'
+        'imageName': '2.png'
       }
       await GetCauseService.createCause(causedata)
         .then(response => (this.status = response.data))

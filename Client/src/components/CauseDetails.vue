@@ -23,10 +23,10 @@
           {{cause.collectedAmt}}
   </div>
           <v-spacer></v-spacer>
-            <v-btn class="cyan btn-update" :disabled= !isUserSignedIn @click="navigateTo({name: 'updateCause' })">Update</v-btn>
-            <v-btn class="cyan btn-donate" :disabled= !isUserSignedIn @click="initDonation">Donate</v-btn>
+            <v-btn class="cyan btn-update" v-if="this.$store.state.isAdmin" @click="navigateTo({name: 'updateCause' })">Update</v-btn>
+            <v-btn class="cyan btn-donate" :disabled=!this.$store.state.signedIn @click="initDonation">Donate</v-btn>
         </v-card-actions>
-        <span v-if="!isUserSignedIn">Please login to donate for the cause </span>
+        <span v-if="!this.$store.state.signedIn">Please login to donate for the cause </span>
       </v-card>
     </v-flex >
     <br>
@@ -70,11 +70,14 @@ export default {
     return {
       cause: {},
       causeId: this.$route.params.causeId,
-      isUserSignedIn: this.$store.state.signedIn,
       donationAmount: '',
       donationPanelVisible: false,
       maxDonationValue: 0
     }
+  },
+  created () {
+    console.log(' Create details isadminLocal' + this.isAdminLocal)
+    console.log(' Create details causeDetails' + this.isUserSignedIn)
   },
   async mounted () {
     this.cause = await GetCauseService.getCauseById(this.causeId)

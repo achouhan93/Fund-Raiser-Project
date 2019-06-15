@@ -8,7 +8,7 @@
       <v-btn flat dark @click="navigateTo({name: 'createcause' })"> Create Cause </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-toolbar-items v-if = "this.$store.state.signedIn" >
+    <v-toolbar-items>
       <v-btn flat dark @click="navigateTo({name: 'about' })"> About US </v-btn>
     </v-toolbar-items>
     <v-toolbar-items>
@@ -18,7 +18,7 @@
             dark
             flat
             v-on="on">
-            Username
+            {{getUserNameTitle()}}
           </v-btn>
         </template>
         <v-list>
@@ -41,37 +41,53 @@
 <script>
 
 import { Auth } from 'aws-amplify'
-import LoginLogoutService from '../services/LoginLogoutService'
+import axios from 'axios'
 // import { AmplifyEventBus } from 'aws-amplify-vue'
 
 export default {
   data () {
     return {
       items: [
-        { title: 'Dashboard' },
-        { title: 'Sign out' }
+        {title: 'Sign out'}
       ],
-      isLogOutSuccess: false
+      isLogOutSuccess: false,
+      username: this.getUserNameTitle()
     }
   },
   methods: {
     navigateTo (route) {
       this.$router.push(route)
     },
-    performAction (titleSelected) {
+    performAction: function (titleSelected) {
       if (titleSelected === 'Dashboard') {
-        this.navigateTo({ name: 'dashboard' })
+        this.navigateTo({name: 'dashboard'})
       } else if (titleSelected === 'Sign out') {
+        console.log('JWT Token ' + this.$store.state.jwt)
         Auth.signOut()
-          .then(LoginLogoutService.getLogout(this.$store.state.jwt))
+        const URL = this.$store.state.API_URL + 'user/logout'
+        const resp = axios({
+          method: 'delete',
+          url: URL,
+          headers: {'authorization': this.$store.state.jwt}
+        })
+        console.log(resp)
+        this.$store.state.jwt = null
+        this.$store.state.signedIn = false
+        this.$store.state.isAdmin = false
+        this.$store.state.user = null
         this.redirectToHome()
       }
     },
     redirectToHome () {
-      if (this.$store.state.jwt == null) {
-        this.$store.state.signedIn = false
-        this.navigateTo({ name: 'home' })
-      }
+      if (this.$store.state.jwt === null) { this.$store.state.signedIn = false }
+      this.$store.state.isAdmin = false
+      this.$store.state.signedIn = false
+      this.navigateTo({name: 'home'})
+    },
+    getUserNameTitle () {
+      var str = this.$store.state.userEmail.toString().split('@')[0]
+      console.log(str + 'String')
+      return str
     }
   }
 }
