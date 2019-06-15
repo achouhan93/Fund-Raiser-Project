@@ -4,13 +4,14 @@
       <v-toolbar class="cyan">
         <v-toolbar-title class="home_title">Discover</v-toolbar-title>
         <v-spacer></v-spacer>
-        <!--<v-flex xs12 sm6 md3>
+        <v-flex xs12 sm6 md3>
           <v-text-field
             class="mx-3 search_field"
             flat
             label="Search"
             solo
             v-model="cause_name"
+            @change="searchCausefilter"
           ></v-text-field> </v-flex>
         <v-flex xs12 sm6 md3>
           <v-select
@@ -22,7 +23,7 @@
             @change="searchCausefilter"
             name="search_category"
             solo></v-select>
-        </v-flex>-->
+        </v-flex>
       </v-toolbar>
       <v-card>
         <v-container
@@ -90,24 +91,40 @@ export default {
       v_binding_flex: 6,
       causeId: '123',
       cause_name: ' ',
-      category: this.$store.state.categories,
+      category: [],
       searchedCauses: []
     }
   },
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
     this.$store.state.categories = await GetCauseService.getAllCategories()
+    this.loadCategories()
   },
   methods: {
     async cause_detail (cause) {
       this.$router.push('cause_details', cause)
     },
+    loadCategories () {
+      this.category = this.$store.state.categories
+      this.category.push({ categoryId: 4, categoryName: 'All', imageName: ' ' })
+    },
     navigateTo (route) {
       this.$router.push(route)
     },
     async searchCausefilter (searchCategory) {
-      this.searchedCauses = await GetCauseService.searchCauseByNameAndId(this.cause_name, searchCategory)
-      this.cause = this.searchedCauses.data
+      console.log('causename' + this.cause_name)
+      console.log('causecat' + searchCategory)
+      if (searchCategory === 'All') {
+        this.searchedCauses = await GetCauseService.searchCauseById(this.cause_name, searchCategory)
+      } else if (this.cause_name.trim() === '' && searchCategory !== 'All') {
+        this.searchedCauses = await GetCauseService.searchCauseById(searchCategory)
+      } else if (this.cause_name.trim() != null && searchCategory != null) {
+        this.searchedCauses = await GetCauseService.searchCauseByNameAndId(this.cause_name, searchCategory)
+      } else if (searchCategory.isEmpty()) {
+        this.searchedCauses = await GetCauseService.searchCauseByName(this.cause_name)
+      }
+      this.causes = this.searchedCauses.data
+      console.log('after search' + this.searchedCauses)
       console.log(this.causes)
     },
     async isAdmin () {

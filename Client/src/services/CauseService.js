@@ -42,23 +42,8 @@ export default {
       data: config
     })
   },
-  /* searchCauseByNameAndId: async function (causeName, categoryId) {
-    console.log('causename and categ ' + causeName + categoryId)
-    var catId = 0
-    switch (categoryId) {
-      case 'Education Help' : catId = 3
-        break
-      case 'Medical Cause' : catId = 2
-        break
-      case 'Natural Disaster' : catId = 1
-        break
-    }
-    return axios
-      .get('localhost:8085/cause/searchCause?searchString=' + causeName + '&categoryId=' + catId)
-      .then(response => (this.causes = response.data))
-  } */
   searchCauseByNameAndId: async function (causeName, categoryId) {
-    // console.log('causename and categ ' + causeName + categoryId)
+    console.log('searchCauseByNameAndId ' + causeName + categoryId)
     var catId = 0
     switch (categoryId) {
       case 'Education Help' : catId = 3
@@ -68,12 +53,50 @@ export default {
       case 'Natural Disaster' : catId = 1
         break
     }
+    console.log('cat name ' + categoryId + 'cat id ' + catId)
+    const URL = 'http://localhost:8085/cause/searchCause'
 
-    const URL = this.$store.state.API_URL + 'cause/searchCause'
     return axios({
       method: 'get',
       url: URL,
       params: { 'categoryId': catId, 'searchString': causeName }
+    })
+  },
+  searchCauseById: async function (categoryId) {
+    var catId = 0
+    switch (categoryId) {
+      case 'Education Help' : catId = 3
+        break
+      case 'Medical Cause' : catId = 2
+        break
+      case 'Natural Disaster' : catId = 1
+        break
+    }
+    console.log('searchCauseById cat name ' + categoryId + ' cat id ' + catId)
+    const URL = 'http://localhost:8085/cause/searchCause'
+
+    if (catId === 0) {
+      return axios({
+        method: 'get',
+        url: URL,
+        params: { 'categoryId': catId, 'searchString': '' }
+      })
+    } else {
+      return axios({
+        method: 'get',
+        url: URL,
+        params: { 'categoryId': catId }
+      })
+    }
+  },
+  searchCauseByName: async function (causeName) {
+    console.log('searchCauseByName causename and categ ' + causeName)
+    const URL = 'http://localhost:8085/cause/searchCause'
+
+    return axios({
+      method: 'get',
+      url: URL,
+      params: { 'searchString': causeName }
     })
   }
 }
