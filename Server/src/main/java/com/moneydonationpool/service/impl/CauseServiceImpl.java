@@ -61,9 +61,9 @@ public class CauseServiceImpl implements CauseService {
 		LoginEntity userLoginEntity = userDetailsDao.checkUserSessionDetails(authorization);
 		CauseEntity originalCauseDetails = causeDao.getCauseById(updateCauseDetails.getCauseId());
 
-		if (originalCauseDetails.getCreatedBy() != userLoginEntity.getUserId()) {
+		/*if (originalCauseDetails.getCreatedBy() != userLoginEntity.getUserId()) {
 			throw new MoneyDonationPoolException(com.moneydonationpool.exception.ErrorCodes.USER_HAS_NO_ACCESS);
-		}
+		}*/
 			originalCauseDetails.setCategoryId(updateCauseDetails.getCategoryId());
 			originalCauseDetails.setCauseExpirationDate(updateCauseDetails.getCauseExpirationDate());
 			originalCauseDetails.setCauseTargetAmt(updateCauseDetails.getCauseTargetAmt());
