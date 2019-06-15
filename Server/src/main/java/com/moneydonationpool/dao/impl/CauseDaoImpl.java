@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.moneydonationpool.dao.CauseDao;
 import com.moneydonationpool.entity.CauseEntity;
 import com.moneydonationpool.exception.MoneyDonationPoolException;
 
 @Repository(value = "CauseDao")
+@Transactional
 public class CauseDaoImpl implements CauseDao {
 	SessionFactory sessionFactory;
 
@@ -46,9 +49,9 @@ public class CauseDaoImpl implements CauseDao {
 	@Override
 	public CauseEntity updateCause(CauseEntity updateCause) {
 		Session session = sessionFactory.getCurrentSession();
-		CauseEntity updateEventById = session.get(CauseEntity.class, updateCause.getCauseId());
-		session.update(updateEventById);
-		return updateEventById;
+		//CauseEntity updateEventById = session.get(CauseEntity.class, updateCause.getCauseId());
+		session.update(updateCause);
+		return updateCause;
 	}
 	
 	@Override
@@ -66,6 +69,13 @@ public class CauseDaoImpl implements CauseDao {
 	public List<CauseEntity> searchCause(String searchString, Integer categoryId) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createQuery("from CauseEntity c where c.isActive=true and (lower(c.causeTitle) like lower('%"+searchString+"%') or c.categoryId="+categoryId+")").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CauseEntity> getTodaysCaused() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeExpirationDate=CURRENT_DATE").list();
 	}
 	
 	@Autowired

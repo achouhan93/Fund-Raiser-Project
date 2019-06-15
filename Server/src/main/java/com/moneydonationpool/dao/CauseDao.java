@@ -21,6 +21,8 @@ public interface CauseDao {
 
 	List<CauseEntity> searchCause(String searchString, Integer categoryId);
 
+	List<CauseEntity> getTodaysCaused();
+
 	
 
 }
