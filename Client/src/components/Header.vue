@@ -41,7 +41,7 @@
 <script>
 
 import { Auth } from 'aws-amplify'
-import axios from 'axios'
+import ApiService from '../services/LoginLogoutService'
 // import { AmplifyEventBus } from 'aws-amplify-vue'
 
 export default {
@@ -58,18 +58,13 @@ export default {
     navigateTo (route) {
       this.$router.push(route)
     },
-    performAction: function (titleSelected) {
+    performAction: async function (titleSelected) {
       if (titleSelected === 'Dashboard') {
         this.navigateTo({name: 'dashboard'})
       } else if (titleSelected === 'Sign out') {
         console.log('JWT Token ' + this.$store.state.jwt)
         Auth.signOut()
-        const URL = this.$store.state.API_URL + 'user/logout'
-        const resp = axios({
-          method: 'delete',
-          url: URL,
-          headers: {'authorization': this.$store.state.jwt}
-        })
+        const resp = await ApiService.getLogout(this.$store.state.jwt)
         console.log(resp)
         this.$store.state.jwt = null
         this.$store.state.signedIn = false

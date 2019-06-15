@@ -12,7 +12,7 @@
 <script>
 import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
-import axios from 'axios'
+import ApiService from '../services/LoginLogoutService'
 
 export default {
   name: 'testLogin',
@@ -45,13 +45,7 @@ export default {
           .getIdToken()
           .getJwtToken()
         this.$store.state.jwt = jwt
-        const URL = this.$store.state.API_URL + 'user/login'
-        const resp = axios({
-          method: 'post',
-          url: URL,
-          params: {'emailId': userEmail},
-          headers: {'authorization': jwt}
-        })
+        const resp = await ApiService.getLogin(jwt, userEmail)
           .then(this.navigateTo({name: 'home'}))
           .catch(e => {
             this.errors.push(e)

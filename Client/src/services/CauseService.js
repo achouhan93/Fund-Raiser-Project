@@ -10,26 +10,21 @@ export default {
       .get('http://localhost:8085/cause/' + causeId)
       .then(response => (this.causes = response.data))
   },
-  getCauseByNameAndCategoryId (causeName, categoryId) {
-    return axios
-      .get('http://localhost:8085/cause/SearchCause?causeName=' + causeName + '&categoryId=' + categoryId)
-      .then(response => (this.causes = response.data))
-  },
-  createCause: async function (causeData) {
-    const URL = this.$store.state.API_URL + 'cause/'
+  creatingCause: async function (userJwt, causeData) {
+    const URL = 'http://localhost:8085/cause/'
     return axios({
       method: 'post',
       url: URL,
-      headers: {'authorization': this.$store.state.jwt},
+      headers: {'authorization': userJwt},
       data: causeData
     })
   },
-  updateCause: async function (causeData) {
-    const URL = this.$store.state.API_URL + 'cause/'
+  updatingCause: async function (userJwt, causeData) {
+    const URL = 'http://localhost:8085/cause/'
     return axios({
       method: 'put',
       url: URL,
-      headers: {'authorization': this.$store.state.jwt},
+      headers: {'authorization': userJwt},
       data: causeData
     })
   },
@@ -38,12 +33,12 @@ export default {
       .get('http://localhost:8085/category/')
       .then(response => (this.category = response.data))
   },
-  postDonation: async function (config) {
-    const URL = this.$store.state.API_URL + 'donation/'
+  postDonation: async function (userJwt, config) {
+    const URL = 'http://localhost:8085/donation/'
     return axios({
       method: 'post',
       url: URL,
-      headers: {'authorization': this.$store.state.jwt},
+      headers: {'authorization': userJwt},
       data: config
     })
   },

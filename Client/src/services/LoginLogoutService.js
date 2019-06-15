@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export default {
+const ApiService = {
   getLogin: async function (userToken, emailId) {
     console.log('Inside getLogin')
-    const URL = this.$store.state.API_URL + 'user/login'
+    const URL = 'http://localhost:8085/user/login'
     return axios({
       method: 'post',
       url: URL,
@@ -12,17 +12,15 @@ export default {
     })
   },
   getLogout: async function (userToken) {
-    const URL = this.$store.state.API_URL + 'user/logout'
+    const URL = 'http://localhost:8085/user/logout'
     return axios({
       method: 'delete',
       url: URL,
       headers: {'authorization': userToken}
-    }).then(
-      this.$store.state.jwt = null
-    )
+    })
   },
   getIsAdmin: async function (userToken) {
-    const URL = this.$store.state.API_URL + 'user/'
+    const URL = 'http://localhost:8085/user/'
     return axios({
       method: 'get',
       url: URL,
@@ -30,3 +28,4 @@ export default {
     })
   }
 }
+export default ApiService

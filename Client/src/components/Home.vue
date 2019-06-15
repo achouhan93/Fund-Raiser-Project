@@ -4,7 +4,7 @@
       <v-toolbar class="cyan">
         <v-toolbar-title class="home_title">Discover</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-flex xs12 sm6 md3>
+        <!--<v-flex xs12 sm6 md3>
           <v-text-field
             class="mx-3 search_field"
             flat
@@ -22,7 +22,7 @@
             @change="searchCausefilter"
             name="search_category"
             solo></v-select>
-        </v-flex>
+        </v-flex>-->
       </v-toolbar>
       <v-card>
         <v-container
@@ -71,7 +71,7 @@
 import Panel from '@/components/Panel'
 import CauseDetails from '@/components/CauseDetails'
 import GetCauseService from '@/services/CauseService'
-import axios from 'axios'
+import ApiService from '../services/LoginLogoutService'
 
 export default {
   name: 'Home',
@@ -90,7 +90,7 @@ export default {
       v_binding_flex: 6,
       causeId: '123',
       cause_name: ' ',
-      category: [],
+      category: this.$store.state.categories,
       searchedCauses: []
     }
   },
@@ -111,12 +111,7 @@ export default {
       console.log(this.causes)
     },
     async isAdmin () {
-      const URL = 'http://localhost:8085/user/'
-      const resp = await axios({
-        method: 'get',
-        url: URL,
-        headers: {'authorization': this.$store.state.jwt}
-      })
+      const resp = await ApiService.getIsAdmin(this.$store.state.jwt)
       console.log(resp.data)
       this.$store.state.user = resp.data
       console.log('checking is admin')

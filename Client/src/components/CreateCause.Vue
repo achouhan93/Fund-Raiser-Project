@@ -110,6 +110,7 @@ export default {
   data () {
     return {
       cause_title: '',
+      category: this.$store.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null,
@@ -155,7 +156,7 @@ export default {
         'bic': this.code,
         'imageName': '2.png'
       }
-      await GetCauseService.createCause(causedata)
+      await GetCauseService.creatingCause(this.$store.state.jwt, causedata)
         .then(response => (this.status = response.data))
       this.navigateTo({ name: 'home' })
     }

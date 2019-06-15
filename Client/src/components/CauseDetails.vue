@@ -101,7 +101,7 @@ export default {
         'causeId': this.cause.causeId,
         'amountDonated': this.donationAmount
       }
-      await CauseService.postDonation(config)
+      await CauseService.postDonation(this.$store.state.jwt, config)
         .then(response => (this.status = response.data))
       this.navigateTo({name: 'home'})
     }

@@ -105,7 +105,7 @@ export default {
       if (!this.errors.any()) {
         console.log(this.cause)
         this.cause.causeExpirationDate = this.cause_expiration_date
-        await CauseService.updateCause(this.cause)
+        await CauseService.updatingCause(this.$store.state.jwt, this.cause)
           .then(response => (this.status = response.data))
         this.navigateTo({name: 'home'})
       }
