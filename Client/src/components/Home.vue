@@ -4,7 +4,7 @@
       <v-toolbar class="cyan">
         <v-toolbar-title class="home_title">Discover</v-toolbar-title>
         <v-spacer></v-spacer>
-        <!--<v-flex xs12 sm6 md3>
+        <v-flex xs12 sm6 md3>
           <v-text-field
             class="mx-3 search_field"
             flat
@@ -15,14 +15,14 @@
         <v-flex xs12 sm6 md3>
           <v-select
             class="mx-3 search_field"
-            :items="category"
+            :items="this.$store.state.categories"
             item-value="categoryValue"
             item-text="categoryName"
             label="Category"
             @change="searchCausefilter"
             name="search_category"
             solo></v-select>
-        </v-flex>-->
+        </v-flex>
       </v-toolbar>
       <v-card>
         <v-container
@@ -90,13 +90,13 @@ export default {
       v_binding_flex: 6,
       causeId: '123',
       cause_name: ' ',
-      category: this.$store.state.categories,
+      category: [],
       searchedCauses: []
     }
   },
   async mounted () {
     this.causes = await GetCauseService.getAllCauses()
-    GetCauseService.getAllCategories()
+    this.$store.state.categories = await GetCauseService.getAllCategories()
   },
   methods: {
     async cause_detail (cause) {

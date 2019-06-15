@@ -19,7 +19,7 @@
           <span v-show="errors.has('title')" class="error--text">{{ errors.first('title') }}</span>
           <br>
           <v-select
-            :items="category"
+            :items="this.$store.state.categories"
             label="Category"
             item-text="categoryName"
             item-value="categoryId"></v-select>
@@ -110,7 +110,6 @@ export default {
   data () {
     return {
       cause_title: '',
-      category: this.$store.state.categories,
       description: '',
       cause_target_amt: '',
       cause_expiration_date: null,

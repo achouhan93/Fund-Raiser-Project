@@ -36,7 +36,7 @@ export default {
   getAllCategories: async function () {
     return axios
       .get('http://localhost:8085/category/')
-      .then(responses => (this.$store.state.categories = responses.data))
+      .then(response => (this.category = response.data))
   },
   postDonation: async function (config) {
     const URL = this.$store.state.API_URL + 'donation/'
