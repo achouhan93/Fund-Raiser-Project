@@ -4,7 +4,7 @@
           <span @click="navigateTo({name: 'home' })" class="home"> Fund Raiser
           </span>
     </v-toolbar-title>
-    <v-toolbar-items v-if = "this.$store.state.signedIn" >
+    <v-toolbar-items v-if = "this.$store.state.isAdmin" >
       <v-btn flat dark @click="navigateTo({name: 'createcause' })"> Create Cause </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
