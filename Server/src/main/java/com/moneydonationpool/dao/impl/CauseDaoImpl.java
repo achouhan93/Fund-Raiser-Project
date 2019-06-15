@@ -75,7 +75,7 @@ public class CauseDaoImpl implements CauseDao {
 	@Override
 	public List<CauseEntity> getTodaysCaused() {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeExpirationDate=CURRENT_DATE").list();
+		return session.createQuery("from CauseEntity c where c.isActive=true and c.causeExpirationDate<CURRENT_DATE").list();
 	}
 	
 	@Autowired
