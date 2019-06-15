@@ -70,18 +70,15 @@ Important: Clone the GitHub repository sad_2019_3_team_10
     4. Open dashboard with name ‘JVM (micrometer)’.
 
 ## Execution of Application:
-
-    1. Start Postgres and Connect to the fundraiser database.
-
-    2. Start the Server:
-        a. Navigate to the target folder present in Server folder: `cd sad_2019_3_team-10/Server/target`
-        b. Execute command: `java -jar fundraiser.jar`
-        c. Server will start at http://localhost:8085
-
-    3. Start the Client:
-        a. Navigate to the Client directory: `cd sad_2019_3_team-10/Client`
-        b. Execute command: `npm run dev`
-        c. Client will start at http://localhost:8080
+1. Start Postgres and Connect to the fundraiser database.
+2. Start the Server:
+    a. Navigate to the target folder present in Server folder: `cd sad_2019_3_team-10/Server/target`
+    b. Execute command: `java -jar fundraiser.jar`
+    c. Server will start at http://localhost:8085
+3. Start the Client:
+    a. Navigate to the Client directory: `cd sad_2019_3_team-10/Client`
+    b. Execute command: `npm run dev`
+    c. Client will start at http://localhost:8080
 
 **Note: We tried with deploying the application on Docker. Docker file for Client is present in Client folder, docker file       for Server is present in Server folder and docker-compose file is present in the root folder. But we were able to spin up     the Postgres image and Server image through docker-compose but Client image is having issue. Therefore, only docker files     are provided and steps are not mentioned to spin up the docker containers.**
 
